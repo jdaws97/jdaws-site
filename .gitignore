@@ -3,3 +3,4 @@ node_modules/
 __pycache__/
 *.blend1
 tools/node_modules
+tools/.build/

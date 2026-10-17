@@ -29,6 +29,8 @@ async def main():
             kind = st[0]
             if kind == "goto": await pg.goto(f"http://127.0.0.1:{port}{st[1]}", timeout=120000); await pg.wait_for_function("window.__done === true", timeout=300000); print("loaded in", round(time.time() - t0, 1), "s", flush=True)
             elif kind == "open": await pg.goto(f"http://127.0.0.1:{port}{st[1]}", timeout=120000)
+            elif kind == "bake":
+                import base64; d = await pg.evaluate("window.__bake"); open(st[1], "wb").write(base64.b64decode(d)); print("baked", st[1], len(d))
             elif kind == "wait": await pg.wait_for_timeout(st[1])
             elif kind == "shot": await pg.screenshot(path=os.path.join(OUT, st[1] + ".png"), timeout=300000); print("shot", st[1], flush=True)
             elif kind == "eval": print("eval", st[1][:60], "->", await pg.evaluate(st[1]), flush=True)
