@@ -30,6 +30,10 @@
   .skills dt{font-weight:600} .skills dd{margin:0;color:var(--soft)}
   @media (max-width:600px){.skills{grid-template-columns:1fr}.skills dd{margin-bottom:8px}}
   a{color:inherit}
+  .isl{font:500 12px Inter;letter-spacing:0;text-transform:none;color:var(--soft);text-decoration:none;margin-left:10px;white-space:nowrap}
+  .isl:hover{color:var(--accent)}
+  #projects ul{padding-left:20px}
+  @media print{.isl{display:none}}
   footer{max-width:760px;margin:0 auto;padding:0 20px 56px;font-size:14px;color:var(--soft)}
   @media print{header{display:none}body{background:#fff;color:#000;font-size:12pt}.name{padding-top:0}section{margin-bottom:20px}}
 </style></head><body>
@@ -44,8 +48,8 @@
 
     <section>
       <h2>Experience</h2>
-      <div class="job">
-        <h3>Booz Allen Hamilton</h3>
+      <div class="job" id="booz-allen">
+        <h3>Booz Allen Hamilton <a class="isl" href="/#booz">See it on the islands &#8599;</a></h3>
         <p class="role">Senior DevOps Engineer / Lead Engineer. Remote, Nov 2022 to present</p>
         <ul>
           <li>Architected a hub-and-spoke EKS management platform that provisions and operates customer workload clusters from a central control plane; now in customer beta.</li>
@@ -59,8 +63,8 @@
           <li>Lead technical delivery for the team and serve as the main point of contact for customer stakeholders.</li>
         </ul>
       </div>
-      <div class="job">
-        <h3>Raytheon Technologies</h3>
+      <div class="job" id="raytheon">
+        <h3>Raytheon Technologies <a class="isl" href="/#raytheon">See it on the islands &#8599;</a></h3>
         <p class="role">Systems Engineer I. State College, PA, Mar 2020 to Nov 2022</p>
         <ul>
           <li>Maintained and improved a production DevOps pipeline, troubleshooting CI/CD failures and release-promotion issues.</li>
@@ -84,8 +88,17 @@
       </dl>
     </section>
 
-    <section class="edu">
-      <h2>Education and certification</h2>
+    <section id="projects">
+      <h2>Side projects <a class="isl" href="/#lab">See it on the islands &#8599;</a></h2>
+      <ul>
+        <li><strong>Civic data platform.</strong> Property research that combines York County parcel, zoning, environmental and municipal records into searchable maps and cited site reports. React, FastAPI, PostgreSQL/PostGIS.</li>
+        <li><strong>Clash of Clans attack simulator.</strong> A simulation built from the game&rsquo;s wiki data that runs thousands of attack scenarios against top bases and designs bases for ranked play.</li>
+        <li><strong>Self-hosted AI.</strong> Open WebUI on TrueNAS with OpenRouter behind it, part of a Proxmox and TrueNAS homelab.</li>
+      </ul>
+    </section>
+
+    <section class="edu" id="education">
+      <h2>Education and certification <a class="isl" href="/#penn">See it on the islands &#8599;</a></h2>
       <p><strong>Pennsylvania State University, Harrisburg.</strong> B.S. Electrical Engineering, 2019</p>
       <p><strong>CompTIA Security+</strong>, 2024</p>
     </section>

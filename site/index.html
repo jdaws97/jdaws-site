@@ -3,6 +3,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Jarod Daws · DevOps and platform engineer</title>
 <meta name="description" content="Jarod Daws, DevOps and platform engineer. Cloud platforms and automation.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jarod Daws · DevOps and platform engineer">
+<meta property="og:description" content="A career told as an archipelago: Penn State, Raytheon, Booz Allen and the lab. Cloud platforms and automation.">
+<meta property="og:image" content="https://jdaws.com/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jdaws.com/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23132430%27/%3E%3Cpath d=%27M10 44c8-6 14-6 22 0s14 6 22 0%27 stroke=%27%2363d3c8%27 stroke-width=%275%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M20 38l8-18 6 10 4-6 8 14z%27 fill=%27%23e9dcc0%27/%3E%3C/svg%3E">
 <style>
   @font-face{font-family:Inter;font-weight:400;font-display:swap;src:url(/fonts/inter-latin-400-normal.woff2)}
@@ -86,6 +93,24 @@
   .more li{margin-bottom:6px}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
   .chips span{font:500 11.5px Inter;color:#3e5363;background:rgba(19,36,48,.06);border:1px solid rgba(19,36,48,.1);border-radius:999px;padding:4px 10px}
+  .explore{display:flex;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+  .explore .seen-count{font:500 12px Inter;color:#5a6a76}
+  .explore .btn{padding:8px 14px;font-size:13px}
+  .card .reslink{display:inline-block;margin-top:12px;font:500 12.5px Inter;color:#7a4a3a;text-decoration:none;pointer-events:auto}
+  .hs.seen .dot{background:#e39a3b;border-color:#fbf8f2}
+  .hs.seen .dot::after{content:'';position:absolute;left:4px;top:1px;width:3px;height:6px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .hs .dot{position:relative}
+  .pop .row{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+  .pop .link{font:500 12px Inter;color:#5a6a76;background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .pop .guide{font:500 12px Inter;color:#5a6a76;margin-left:auto}
+  .caption{position:absolute;left:50%;bottom:132px;transform:translateX(-50%);max-width:min(720px,calc(100vw - 32px));text-align:center;font:400 30px/1.25 SourceSerif;color:#fbf8f2;text-shadow:0 2px 18px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.5);opacity:0;transition:opacity .5s ease;pointer-events:none}
+  .caption.on{opacity:1}
+  #ui.fast #card,#ui.fast #spots,#ui.fast #hint,#ui.fast .mini,#ui.fast .rail{opacity:0!important;pointer-events:none!important;transition:opacity .5s}
+  .caption small{display:block;font:500 11px Inter;letter-spacing:.22em;text-transform:uppercase;margin-bottom:8px;opacity:.85}
+  .fastbar{position:absolute;left:50%;top:34px;transform:translateX(-50%);font:500 12px Inter;color:#132430;background:rgba(251,248,242,.88);border:1px solid rgba(19,36,48,.12);border-radius:999px;padding:8px 14px;display:flex;gap:10px;align-items:center;pointer-events:auto}
+  .fastbar i{display:block;width:120px;height:3px;background:rgba(19,36,48,.15);border-radius:3px;overflow:hidden}
+  .fastbar s{display:block;height:100%;background:#e39a3b;width:0}
+  .sheet-h{display:none}
   .more{display:none}
   .card.open .more{display:block}
   .card.stop{max-height:calc(100vh - 160px);overflow:auto;pointer-events:auto}
@@ -114,9 +139,19 @@
     .card.stop{max-height:calc(100vh - 170px);overflow:auto;pointer-events:auto}
     .stats{gap:16px;margin-top:12px;padding-top:10px}
     .stats b{font-size:26px}
-    .more{display:none}
+    .more{display: none}
     .card.open .more{display:block}
     .more-btn{display:inline-block;margin-top:12px;font:500 13px Inter;color:#132430;background:rgba(19,36,48,.07);border:1px solid rgba(19,36,48,.14);border-radius:999px;padding:7px 14px;pointer-events:auto}
+    .card.stop{left:0;right:0;bottom:0;border-radius:18px 18px 0 0;padding:10px 20px calc(86px + env(safe-area-inset-bottom));transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .6s;touch-action:none;max-height:78vh}
+    .card.stop.gone{transform:translateY(40px)}
+    .sheet-h{display:block;width:40px;height:5px;border-radius:5px;background:rgba(19,36,48,.25);margin:2px auto 12px}
+    .card.stop.peek .role,.card.stop.peek .stats,.card.stop.peek .explore,.card.stop.peek .more-btn,.card.stop.peek .reslink,.card.stop.peek .acts,.card.stop.peek p,.card.stop.peek .fine{display:none}
+    .card.stop.peek h2{font-size:26px;margin-bottom:0}
+    .ui-nav{z-index:2}
+    .caption{bottom:auto;top:84px;font-size:22px}
+    .fastbar{top:62px}
+    #spots.covered .hs{opacity:0!important;pointer-events:none!important}
+    .card.stop.open ~ .ui-nav{opacity:0;pointer-events:none}
     .rail.click,.mini,.ui-hint{display:none}
     .ui-nav{bottom:22px}
     .ui-count{display:none}
@@ -176,6 +211,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
 const Q = new URLSearchParams(location.search);
@@ -206,7 +242,10 @@ if (BLENDER) {
 }
 // Shared animated materials replace the exported ones by name (lamps glow with time of day, glass stays see-through)
 const SWAP = {};
-const fixMats = o => o.traverse(m => { if (m.isMesh && SWAP[m.material.name]) { m.material = SWAP[m.material.name]; if (m.material.transparent) m.castShadow = false; } });
+// Shared by every shader that moves or changes with the seasons and the night
+const LIFE = { uTime: { value: 0 }, uSnow: { value: 0 }, uAutumn: { value: 0 }, uNight: { value: 0 } };
+const WINDOW_MATS = [];
+const fixMats = o => o.traverse(m => { if (m.isMesh && m.material.name === 'window') { const w = m.material.clone(); w.emissive = new THREE.Color('#ffc978'); w.emissiveIntensity = 0; w.userData.on = 0.15 + Math.random() * 0.75; WINDOW_MATS.push(w); m.material = w; return; } if (m.isMesh && SWAP[m.material.name]) { m.material = SWAP[m.material.name]; if (m.material.transparent) m.castShadow = false; } });
 // models keep their own node transform (meshopt stores a dequantize scale there), so wrap them
 const place = (name, x, y, z, rot = 0, s = 1) => { const o = new THREE.Group(); o.add(LIB[name].clone()); o.position.set(x, y, z); o.rotation.y = rot; o.scale.setScalar(s); fixMats(o); scene.add(o); return o; };
 const PLACED = []; // ground-standing models, handed to the terrain bake
@@ -313,7 +352,18 @@ if (BLENDER) { // soft shadows baked in Blender: one byte per terrain vertex
   else console.warn('terrain AO size mismatch', ao.length, P2.count);
 }
 geo.setAttribute('color', new THREE.BufferAttribute(cols, 3));
-const terrain = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0, flatShading: LOW }));
+const terrainMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0, flatShading: LOW });
+terrainMat.customProgramCacheKey = () => 'terrain-snow';
+terrainMat.onBeforeCompile = sh => {
+  Object.assign(sh.uniforms, LIFE);
+  sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWP;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvWP = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+  sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uSnow; varying vec3 vWP;')
+    .replace('#include <color_fragment>', `#include <color_fragment>
+      { vec3 fn = normalize(cross(dFdx(vWP), dFdy(vWP)));
+        float s = uSnow * smoothstep(2.15, 2.75, vWP.y + 0.25 * sin(vWP.x * 3.1) * cos(vWP.z * 2.3)) * smoothstep(0.35, 0.75, abs(fn.y));
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.93, 0.95, 0.98), s); }`);
+};
+const terrain = new THREE.Mesh(geo, terrainMat);
 terrain.receiveShadow = true; terrain.castShadow = true; scene.add(terrain);
 
 let water, waterMat, farSea;
@@ -392,7 +442,12 @@ ${Q.get('wdbg') === '1' ? 'diffuseColor = vec4(vec3(depth * 0.5), 1.0);' : Q.get
 roughnessFactor = mix(wRough, 0.9, wFoam);${Q.get('wdbg') === 'rough' ? 'roughnessFactor = 0.6;' : ''}`).replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
 ${REAL ? 'normal = normalize((viewMatrix * vec4(wN, 0.0)).xyz);' : ''}`).replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
 { vec3 V = normalize(vW - cameraPosition); float back = pow(max(dot(V, normalize(uSunDir)), 0.0), 3.0);
-  totalEmissiveRadiance += uSSS * uSunCol * (back * 0.9 + 0.03) * smoothstep(0.0, 0.16, vCrest) * (1.0 - wFoam) * 0.5; }`);
+  totalEmissiveRadiance += uSSS * uSunCol * (back * 0.9 + 0.03) * smoothstep(0.0, 0.16, vCrest) * (1.0 - wFoam) * 0.5; }
+{ // caustics: the bright web of light that dances on sand under shallow water
+  vec2 cp = vW.xz * 3.2; float c1 = vnoise(cp + vec2(uTime * 0.35, uTime * 0.21)), c2 = vnoise(cp * 1.37 - vec2(uTime * 0.27, -uTime * 0.31));
+  float web = pow(1.0 - abs(c1 - c2), 9.0);
+  float dep = max(0.0, -vTerr), shallow = smoothstep(0.02, 0.12, dep) * (1.0 - smoothstep(0.35, 0.95, dep));
+  totalEmissiveRadiance += uSunCol * web * shallow * (1.0 - wFoam) * 0.55; }`);
   };
   const wg = LITE ? new THREE.PlaneGeometry(112, 90, 260, 210) : new THREE.PlaneGeometry(112, 90, 448, 360); wg.rotateX(-Math.PI / 2);
   water = new THREE.Mesh(wg, waterMat); water.receiveShadow = Q.get('wdbg') !== 'noshadow'; water.frustumCulled = false; scene.add(water);
@@ -464,7 +519,27 @@ function instanceAsset(name, list, tint) {
   const dm = new THREE.Object3D(), tc = new THREE.Color();
   root.traverse(m => {
     if (!m.isMesh) return;
-    const im = new THREE.InstancedMesh(m.geometry, m.material, list.length);
+    let mat = m.material;
+    if (/pine|leaf/.test(mat.name)) { // foliage gets wind, autumn color and snow
+      const autumn = /leaf/.test(mat.name);
+      mat = mat.clone(); mat.customProgramCacheKey = () => 'foliage-' + autumn; mat.onBeforeCompile = sh => {
+        Object.assign(sh.uniforms, LIFE);
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime; varying vec3 vWP; varying float vUp;')
+          .replace('#include <begin_vertex>', `#include <begin_vertex>
+            vec4 ip = modelMatrix * instanceMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+            float hgt = max(0.0, position.y + 0.2);
+            transformed.x += sin(uTime * 1.3 + ip.x * 0.7 + ip.z * 0.4) * 0.035 * hgt;
+            transformed.z += cos(uTime * 1.1 + ip.z * 0.6) * 0.025 * hgt;
+            vWP = (modelMatrix * instanceMatrix * vec4(transformed, 1.0)).xyz; vUp = normal.y;`);
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uSnow, uAutumn; varying vec3 vWP; varying float vUp;')
+          .replace('#include <color_fragment>', `#include <color_fragment>
+            ${autumn ? `{ float a = uAutumn * (0.55 + 0.45 * fract(sin(dot(floor(vWP.xz * 1.7), vec2(12.9, 78.2))) * 43758.5));
+              vec3 fall = mix(vec3(0.82, 0.42, 0.12), vec3(0.72, 0.2, 0.12), fract(sin(dot(floor(vWP.xz * 2.3), vec2(4.1, 9.7))) * 931.7));
+              diffuseColor.rgb = mix(diffuseColor.rgb, fall, a); }` : ''}
+            diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.92, 0.95, 0.98), uSnow * 0.8 * smoothstep(1.7, 2.4, vWP.y) * smoothstep(0.5, 0.85, vUp));`);
+      };
+    }
+    const im = new THREE.InstancedMesh(m.geometry, mat, list.length);
     list.forEach((t, i) => { dm.position.set(t.x, t.y, t.z); dm.rotation.set(0, t.rot, 0); dm.scale.setScalar(t.s); dm.updateMatrix(); im.setMatrixAt(i, dm.matrix.multiply(m.matrixWorld));
       if (tint && /pine|leaf/.test(m.material.name)) im.setColorAt(i, tc.setRGB(0.88 + 0.2 * t.tint[0], 0.9 + 0.18 * t.tint[1], 0.88 + 0.14 * t.tint[2])); });
     im.castShadow = im.receiveShadow = true; scene.add(im);
@@ -621,10 +696,17 @@ boat(-1.2, 7.2, 0.4, '#f7f3ea'); boat(10.5, -0.5, 2.2, '#e9785a'); boat(-12.8, 1
 
 // ---------- Clouds drifting over the water ----------
 const CLOUDS = [];
-const cloudMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, flatShading: true, emissive: '#ffffff', emissiveIntensity: 0.12 });
+const cloudMat = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 1, flatShading: false, emissive: '#ffffff', emissiveIntensity: 0.12, transparent: true, opacity: 0.96 });
 [[-4, 8.5, -6], [10, 9, 1], [-14, 8, -2], [16, 9.5, -9]].forEach(([x, y, z], k) => {
   const g = new THREE.Group();
-  for (let i = 0; i < 7; i++) { const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.55 + rnd() * 0.55, 0), cloudMat); m.position.set((rnd() - 0.5) * 3.0, (rnd() - 0.2) * 0.35, (rnd() - 0.5) * 1.3); m.rotation.set(rnd() * 3, rnd() * 3, rnd() * 3); m.castShadow = true; g.add(m); }
+  // soft puffs: rounded spheres with a lumpy surface and a flattened base, merged into one mesh per cloud
+  const parts = [];
+  for (let i = 0; i < 11; i++) {
+    const r = 0.45 + rnd() * 0.6, gq = new THREE.IcosahedronGeometry(r, 3), pp = gq.attributes.position;
+    for (let v = 0; v < pp.count; v++) { const x = pp.getX(v), y = pp.getY(v), z = pp.getZ(v), n = 1 + 0.12 * noise.noise3d(x * 2.5 + i, y * 2.5, z * 2.5); pp.setXYZ(v, x * n, Math.max(y * n, -r * 0.35), z * n); }
+    gq.translate((rnd() - 0.5) * 3.2, (rnd() - 0.15) * 0.45, (rnd() - 0.5) * 1.4); parts.push(gq);
+  }
+  const cm = new THREE.Mesh(mergeGeometries(parts), cloudMat); cm.geometry.computeVertexNormals(); cm.castShadow = true; g.add(cm);
   g.scale.set(1, 0.58, 1); g.position.set(x, y + 1.2, z); g.userData.x0 = x; CLOUDS.push(g); scene.add(g);
 });
 
@@ -644,7 +726,8 @@ const WB = NEW ? null : Float32Array.from(water.geometry.attributes.position.arr
 function animate(t) {
   WU.uTime.value = t;
   if (NEW) {
-    BOATS.forEach(b => { const g = waveAt(b.position.x, b.position.z, t), gx = waveAt(b.position.x + 0.3, b.position.z, t), gz = waveAt(b.position.x, b.position.z + 0.3, t); b.position.y = g.y + 0.01; b.rotation.z = Math.atan2(gx.y - g.y, 0.3) * 0.8; b.rotation.x = -Math.atan2(gz.y - g.y, 0.3) * 0.8; });
+    WAKE.tick(t); BIRDS.tick(t); SMOKE.tick(t);
+    BOATS.forEach(b => { const g = waveAt(b.position.x, b.position.z, t), gx = waveAt(b.position.x + 0.3, b.position.z, t), gz = waveAt(b.position.x, b.position.z + 0.3, t); b.position.y = g.y + 0.01; b.rotation.order = 'YXZ'; if (b.userData.yaw != null) b.rotation.y = b.userData.yaw; b.rotation.z = Math.atan2(gx.y - g.y, 0.3) * 0.8; b.rotation.x = -Math.atan2(gz.y - g.y, 0.3) * 0.8; });
     if (radar) radar.rotation.y = 0.8 + t * 0.9; CLOUDS.forEach((g, i) => { g.position.x = ((g.userData.x0 + t * (0.12 + i * 0.03) + 45) % 90 + 90) % 90 - 45; }); return;
   }
   const wp = water.geometry.attributes.position;
@@ -675,11 +758,112 @@ let ENV_SKIP = false;
 function updateEnv() { if (!NEW || ENV_SKIP) return; if (envRT) envRT.dispose(); envRT = pmrem.fromScene(envScene, 0, 0.1, 100); scene.environment = envRT.texture; }
 if (NEW) { scene.add(skyDome); scene.background = null; }
 
+// ---------- Life: seabirds, chimney smoke, sailing boats and their wakes ----------
+const BIRDS = (() => { // gulls wheel over the islands; wings flap in the vertex shader
+  const n = LITE ? 18 : 36, g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0.06, -0.16, 0, -0.02, 0, 0, -0.04, 0, 0, 0.06, 0, 0, -0.04, 0.16, 0, -0.02], 3));
+  g.setAttribute('wing', new THREE.Float32BufferAttribute([0, 1, 0, 0, 0, 1], 1)); g.computeVertexNormals();
+  const m = new THREE.MeshBasicMaterial({ color: '#f4f1ea', side: THREE.DoubleSide, fog: true });
+  m.onBeforeCompile = sh => { Object.assign(sh.uniforms, LIFE);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uTime; attribute float wing;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\ntransformed.y += wing * sin(uTime * 9.0 + float(gl_InstanceID) * 1.7) * 0.07;'); };
+  const im = new THREE.InstancedMesh(g, m, n); im.frustumCulled = false; scene.add(im);
+  const hubs = [V(-17.6, 2.2, 9), V(-8, 3.2, 3.6), V(5, 4.6, -3), V(13.4, 2.6, 6.2)];
+  const B = []; let s = 3; const r = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  for (let i = 0; i < n; i++) B.push({ hub: hubs[i % 4], rad: 1.8 + r() * 3, h: r() * 1.6, sp: (0.25 + r() * 0.25) * (r() < 0.5 ? -1 : 1), ph: r() * 6.28 });
+  const d = new THREE.Object3D();
+  return { tick(t) { B.forEach((b, i) => { const a = b.ph + t * b.sp, x = b.hub.x + Math.cos(a) * b.rad, z = b.hub.z + Math.sin(a) * b.rad * 0.8;
+    d.position.set(x, b.hub.y + b.h + Math.sin(t * 0.7 + i) * 0.25, z); d.rotation.set(0, -a - (b.sp > 0 ? 0 : Math.PI), Math.sign(b.sp) * 0.35); d.scale.setScalar(0.9); d.updateMatrix(); im.setMatrixAt(i, d.matrix); });
+    im.instanceMatrix.needsUpdate = true; im.visible = LIFE.uNight.value < 0.6; } };
+})();
+const SMOKE = (() => { // soft puffs that rise from chimneys and drift downwind
+  const chim = [];
+  BOOZ.filter(b => /^house/.test(b.name)).forEach((b, i) => { if (i % 2) return; const lx = b.name === 'house_b' ? -0.11 : 0.11, c = Math.cos(b.rot), s = Math.sin(b.rot);
+    chim.push(V(b.x + (lx * c + -0.075 * s) * b.s, b.y + 0.62 * b.s, b.z + (-lx * s + -0.075 * c) * b.s)); });
+  chim.push(V(LH.x - 0.55, ground(LH.x - 0.55, LH.z + 0.25) + 0.48, LH.z + 0.25));
+  const per = 7, n = chim.length * per, pos = new Float32Array(n * 3), age = new Float32Array(n);
+  for (let i = 0; i < n; i++) age[i] = (i % per) / per;
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('age', new THREE.BufferAttribute(age, 1));
+  const m = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uScale: { value: H }, uCol: { value: new THREE.Color('#e9e6e1') } },
+    vertexShader: 'attribute float age; varying float vA; uniform float uScale; void main(){ vA = age; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_PointSize = (0.10 + age * 0.32) * uScale / -mv.z; gl_Position = projectionMatrix * mv; }',
+    fragmentShader: 'varying float vA; uniform vec3 uCol; void main(){ float d = length(gl_PointCoord - 0.5); if (d > 0.5) discard; gl_FragColor = vec4(uCol, (1.0 - smoothstep(0.15, 0.5, d)) * 0.42 * (1.0 - vA) * smoothstep(0.0, 0.08, vA)); }' });
+  const pts = new THREE.Points(g, m); pts.frustumCulled = false; scene.add(pts);
+  return { tick(t) { for (let i = 0; i < n; i++) { const a = ((t * 0.16 + (i % per) / per) % 1), c = chim[Math.floor(i / per)];
+      age[i] = a; pos[i * 3] = c.x + a * 0.55 + Math.sin(t + i) * 0.03 * a; pos[i * 3 + 1] = c.y + a * 0.9; pos[i * 3 + 2] = c.z + a * 0.2; }
+    g.attributes.position.needsUpdate = true; g.attributes.age.needsUpdate = true; m.uniforms.uScale.value = H * camera.projectionMatrix.elements[5] / 2; } };
+})();
+// boats sail slow loops between the islands and leave a foam wake
+const ROUTES = [{ c: V(-3.2, 0, 7.6), rx: 2.6, rz: 1.1, sp: 0.05 }, { c: V(10.6, 0, 0.8), rx: 0.9, rz: 1.5, sp: -0.045 }, { c: V(-12.6, 0, 12.2), rx: 2.2, rz: 0.9, sp: 0.04 }];
+const WAKE = (() => {
+  const per = 34, n = ROUTES.length * per, pos = new Float32Array(n * 3), age = new Float32Array(n);
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('age', new THREE.BufferAttribute(age, 1));
+  const m = new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: { uScale: { value: H } },
+    vertexShader: 'attribute float age; varying float vA; uniform float uScale; void main(){ vA = age; vec4 mv = modelViewMatrix * vec4(position, 1.0); gl_PointSize = (0.07 + age * 0.16) * uScale / -mv.z; gl_Position = projectionMatrix * mv; }',
+    fragmentShader: 'varying float vA; void main(){ float d = length(gl_PointCoord - 0.5); if (d > 0.5) discard; gl_FragColor = vec4(0.96, 0.98, 1.0, (1.0 - smoothstep(0.2, 0.5, d)) * 0.55 * (1.0 - vA)); }' });
+  const pts = new THREE.Points(g, m); pts.frustumCulled = false; scene.add(pts);
+  const at = (R, u) => V(R.c.x + Math.cos(u) * R.rx, 0, R.c.z + Math.sin(u) * R.rz);
+  return { at, tick(t) {
+    ROUTES.forEach((R, k) => { const b = BOATS[k]; if (!b) return; const u = t * R.sp, p = at(R, u), q = at(R, u + Math.sign(R.sp) * 0.02);
+      b.position.x = p.x; b.position.z = p.z; b.userData.yaw = Math.atan2(-(q.z - p.z), q.x - p.x);
+      for (let j = 0; j < per; j++) { const a = j / per, w = at(R, u - Math.sign(R.sp) * a * 0.35), side = (j % 2 ? 1 : -1) * a * 0.12, i = k * per + j, nx = -(q.z - p.z), nz = q.x - p.x, nl = Math.hypot(nx, nz) || 1;
+        pos[i * 3] = w.x + nx / nl * side; pos[i * 3 + 1] = 0.03; pos[i * 3 + 2] = w.z + nz / nl * side; age[i] = a; } });
+    g.attributes.position.needsUpdate = true; g.attributes.age.needsUpdate = true; m.uniforms.uScale.value = H * camera.projectionMatrix.elements[5] / 2; } };
+})();
+
+// ---------- Night sky and the lighthouse ----------
+const STARS = (() => {
+  const n = 1400, pos = new Float32Array(n * 3); let s = 5; const r = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  for (let i = 0; i < n; i++) { const u = r(), v = 0.04 + r() * 0.96, th = u * Math.PI * 2, y = v * v; const rr = Math.sqrt(1 - y * y); pos.set([Math.cos(th) * rr * 230, y * 230, Math.sin(th) * rr * 230], i * 3); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const m = new THREE.PointsMaterial({ color: '#ffffff', size: 1.6, sizeAttenuation: false, transparent: true, opacity: 0, fog: false, depthWrite: false });
+  const p = new THREE.Points(g, m); p.frustumCulled = false; p.visible = false; scene.add(p); return p;
+})();
+const BEAM = (() => { // a soft cone of light that sweeps from the lighthouse lamp
+  const g = new THREE.Group(); g.position.set(LH.x, LH.y + 1.2, LH.z);
+  const cg = new THREE.ConeGeometry(1.3, 11, 28, 1, true); cg.translate(0, -5.5, 0); cg.rotateZ(Math.PI / 2 - 0.05);
+  const cm = new THREE.MeshBasicMaterial({ color: '#ffe3a1', transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide, fog: false });
+  g.add(new THREE.Mesh(cg, cm)); g.visible = false; scene.add(g); return g;
+})();
+
+// ---------- Morning mist that sits in the valleys ----------
+const MIST = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'), gr = x.createRadialGradient(64, 64, 4, 64, 64, 62);
+  gr.addColorStop(0, 'rgba(255,255,255,0.9)'); gr.addColorStop(0.5, 'rgba(255,255,255,0.35)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = gr; x.fillRect(0, 0, 128, 128);
+  const tex = new THREE.CanvasTexture(c), grp = new THREE.Group(); let s = 9; const r = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  for (let i = 0; i < 70 && grp.children.length < 34; i++) {
+    const x0 = -20 + r() * 38, z0 = -9 + r() * 22, hh = heightAt(x0, z0);
+    if (hh < 0.4 || hh > 2.0) continue;
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, color: '#fff4ec', transparent: true, opacity: 0, depthWrite: false, fog: true }));
+    sp.position.set(x0, hh + 0.35, z0); sp.scale.set(3.4 + r() * 2.5, 0.9 + r() * 0.5, 1); sp.userData.o = 0.32 + r() * 0.25; grp.add(sp);
+  }
+  scene.add(grp); return grp;
+})();
+
 // ---------- Post ----------
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 const GRADE = { tDiffuse: { value: null }, uSeed: { value: 0 }, uRes: { value: new THREE.Vector2(W, H) } };
+// light shafts: blur bright sky toward the sun's position on screen
+const GODRAY = new ShaderPass({ uniforms: { tDiffuse: { value: null }, uSun: { value: new THREE.Vector2(0.5, 0.5) }, uStrength: { value: 0 }, uOn: { value: 0 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: `uniform sampler2D tDiffuse; uniform vec2 uSun; uniform float uStrength, uOn; varying vec2 vUv;
+  void main() { vec4 base = texture2D(tDiffuse, vUv); if (uStrength * uOn < 0.001) { gl_FragColor = base; return; }
+    vec2 d = (uSun - vUv) / 48.0; vec2 p = vUv; float decay = 1.0, acc = 0.0;
+    for (int i = 0; i < 48; i++) { p += d; vec3 s = texture2D(tDiffuse, clamp(p, 0.001, 0.999)).rgb; float l = max(0.0, dot(s, vec3(0.3, 0.55, 0.15)) - 0.85); acc += l * decay; decay *= 0.965; }
+    gl_FragColor = vec4(base.rgb + vec3(1.0, 0.82, 0.6) * acc * uStrength * uOn * 0.09, base.a); }` });
+// tilt-shift: a miniature-style blur that keeps a band around the focus point sharp
+const TILT = new ShaderPass({ uniforms: { tDiffuse: { value: null }, uFocus: { value: 0.5 }, uAmount: { value: 1 }, uRes: { value: new THREE.Vector2(W, H) } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+  fragmentShader: `uniform sampler2D tDiffuse; uniform float uFocus, uAmount; uniform vec2 uRes; varying vec2 vUv;
+  void main() { float dd = abs(vUv.y - uFocus); float r = smoothstep(0.12, 0.55, dd) * 5.5 * uAmount;
+    if (r < 0.2) { gl_FragColor = texture2D(tDiffuse, vUv); return; }
+    vec4 acc = vec4(0.0); float wsum = 0.0; vec2 px = r / uRes;
+    for (int i = 0; i < 16; i++) { float a = float(i) * 2.39996; float rad = sqrt(float(i) + 0.5) / 4.0; vec2 o = vec2(cos(a), sin(a)) * rad * px * 4.0;
+      acc += texture2D(tDiffuse, vUv + o); wsum += 1.0; }
+    gl_FragColor = acc / wsum; }` });
 if (NEW) {
+  composer.addPass(GODRAY);
+  if (!LITE) composer.addPass(TILT);
   if (!LITE) composer.addPass(new UnrealBloomPass(new THREE.Vector2(W, H), +(Q.get('bloom') || 0.3), 0.6, 0.92));
   composer.addPass(new OutputPass());
   composer.addPass(new ShaderPass({ uniforms: GRADE,
@@ -701,10 +885,12 @@ const KEYS = [
   { shallow: '#7fcfc6', pos: V(-22, 8, 19), col: '#ffb27a', I: 4.0, sky: '#b9b4e6', gnd: '#5b5a44', hI: 0.55, top: '#6a86c8', mid: '#e3b9c0', bot: '#ffd6a8', fog: '#efc9c6', sea: '#2a6f8c', lampI: 2.4 },
   { shallow: '#5fd6c6', pos: V(-6, 30, 8), col: '#fff6e6', I: 2.9, sky: '#cfe6ff', gnd: '#5d6b3c', hI: 0.75, top: '#7fb2d9', mid: '#b9d6e8', bot: '#e6eff3', fog: '#cfe2ec', sea: '#2589ad', lampI: 0.9 },
   { shallow: '#6cc4b0', pos: V(20, 7, 21), col: '#ff9c4a', I: 4.6, sky: '#8f9fd8', gnd: '#5a4632', hI: 0.5, top: '#3f5a9a', mid: '#d9a38a', bot: '#ffc27a', fog: '#f0b48a', sea: '#1f5f72', lampI: 3.2 },
+  { shallow: '#173d4c', pos: V(-12, 16, -18), col: '#7f98e8', I: 0.55, sky: '#33427a', gnd: '#0e131c', hI: 0.75, top: '#050a1e', mid: '#121c40', bot: '#3c3458', fog: '#1a2038', sea: '#071c2a', lampI: 8.0 },
 ];
 const Cl = c => new THREE.Color(c), lc = (a, b, t) => Cl(a).lerp(Cl(b), t);
 function setDay(t) {
-  const k = t <= 0.5 ? 0 : 1, f = (t - k * 0.5) / 0.5, A = KEYS[k], Bk = KEYS[k + 1];
+  const k = Math.min(KEYS.length - 2, Math.floor(t / 0.5)), f = Math.min(1, (t - k * 0.5) / 0.5), A = KEYS[k], Bk = KEYS[k + 1];
+  const night = Math.max(0, Math.min(1, (t - 1.0) / 0.45)); LIFE.uNight.value = night;
   sun.position.copy(A.pos).lerp(Bk.pos, f); sun.color.copy(lc(A.col, Bk.col, f)); sun.intensity = A.I + (Bk.I - A.I) * f;
   hemi.color.copy(lc(A.sky, Bk.sky, f)); hemi.groundColor.copy(lc(A.gnd, Bk.gnd, f)); hemi.intensity = A.hI + (Bk.hI - A.hI) * f;
   const g = g2.createLinearGradient(0, 0, 0, 256);
@@ -715,12 +901,16 @@ function setDay(t) {
   if (NEW) {
     hemi.intensity *= +(Q.get('hemi') || 0.45);
     SKY.top.value.copy(lc(A.top, Bk.top, f)); SKY.mid.value.copy(lc(A.mid, Bk.mid, f)); SKY.bot.value.copy(lc(A.bot, Bk.bot, f));
-    SKY.sunDir.value.copy(sun.position).normalize(); SKY.sunCol.value.copy(sun.color); SKY.glow.value = (t < 0.2 || t > 0.8) ? 1.4 : 0.5;
+    SKY.sunDir.value.copy(sun.position).normalize(); SKY.sunCol.value.copy(sun.color).multiplyScalar(1 - night * 0.85); SKY.glow.value = night > 0.5 ? 0.25 : (t < 0.2 || t > 0.8) ? 1.4 : 0.5;
+    STARS.material.opacity = night * night; STARS.visible = night > 0.02; BEAM.visible = night > 0.05; BEAM.children[0].material.opacity = 0.42 * night;
+    WINDOW_MATS.forEach(w => { w.emissiveIntensity = 2.2 * Math.max(0, Math.min(1, (night + (t > 0.95 ? 0.2 : 0) - w.userData.on) / 0.12)); });
     WU.uSunDir.value.copy(SKY.sunDir.value); WU.uSunCol.value.copy(sun.color);
     const sea = lc(A.sea, Bk.sea, f); SKY.sea.value.copy(sea);
     if (REAL) { WU.uDeep.value.copy(sea).multiplyScalar(0.42); WU.uShallow.value.copy(lc(A.shallow, Bk.shallow, f)).multiplyScalar(0.8); }
     else { WU.uDeep.value.copy(sea).multiplyScalar(0.8); WU.uShallow.value.copy(lc(A.shallow, Bk.shallow, f)); }
     scene.fog.color.copy(SKY.bot.value).lerp(SKY.mid.value, 0.5); scene.fog.near = 60; scene.fog.far = 150;
+    const dawn = Math.max(0, 1 - t / 0.22); MIST.children.forEach(sp => sp.material.opacity = sp.userData.o * dawn); MIST.visible = dawn > 0.01;
+    GODRAY.uniforms.uStrength.value = LITE ? 0 : Math.max(dawn, Math.max(0, Math.min(1, (t - 0.72) / 0.15)) * Math.max(0, 1 - (t - 1.0) / 0.2)) * 0.55;
     updateEnv();
   }
   cloudMat.emissive.copy(lc(A.fog, Bk.fog, f)); cloudMat.emissiveIntensity = 0.22;
@@ -845,12 +1035,12 @@ const CARD = o => `<small>${o.when}</small><h2>${o.title}</h2><p class="role">${
   + (o.tools ? '<div class="chips">' + o.tools.map(t => `<span>${t}</span>`).join('') + '</div>' : '') + '</div>' : '');
 const padAt = (i, up) => { const a = -0.3 + i / 6 * Math.PI * 1.25; return V(R.x + Math.cos(a) * 2.2, RY + up, R.z + Math.sin(a) * 1.9 + 0.2); };
 const STOPS = [
-  { id: 'intro', day: 0.02, cam: { p: V(-25.5, 1.5, 15.5), t: V(-6.6, 1.7, -5.1), fov: 38 } },
-  { id: 'penn', name: 'Penn State', day: 0.07, year: 0, focus: PS, cam: { p: V(-20.0, 6.8, 16.6), t: V(-18.4, 0.9, 8.6), fov: 32 }, camTall: { p: V(-19.0, 7.4, 17.2), t: V(-17.4, 0.9, 8.9), fov: 32 },
+  { id: 'intro', season: [0, 0], tilt: 0.35, day: 0.02, cam: { p: V(-25.5, 1.5, 15.5), t: V(-6.6, 1.7, -5.1), fov: 38 } },
+  { id: 'penn', resume: 'education', name: 'Penn State', season: [0, 0], day: 0.07, year: 0, focus: PS, cam: { p: V(-20.0, 6.8, 16.6), t: V(-18.4, 0.9, 8.6), fov: 32 }, camTall: { p: V(-19.0, 7.4, 17.2), t: V(-17.4, 0.9, 8.9), fov: 32 },
     card: CARD({ when: '2019', title: 'Penn State', role: 'B.S. Electrical Engineering &middot; Penn State Harrisburg' }),
     spots: [[at(-16.45, 9.45, 1.7), 'Campus', 'Penn State Harrisburg', 'B.S. Electrical Engineering, 2019.'],
             [at(-18.45, 8.3, 0.75), 'Beaver Stadium', 'Beaver Stadium', 'Home of Penn State football.']] },
-  { id: 'raytheon', name: 'Raytheon', day: 0.3, year: 2, focus: R, cam: { p: V(R.x - 6.8, RY + 6.0, R.z + 9.6), t: V(R.x - 1.6, RY + 1.0, R.z + 0.6), fov: 34 },
+  { id: 'raytheon', resume: 'raytheon', name: 'Raytheon', season: [0, 0], day: 0.3, year: 2, focus: R, cam: { p: V(R.x - 6.8, RY + 6.0, R.z + 9.6), t: V(R.x - 1.6, RY + 1.0, R.z + 0.6), fov: 34 },
     launch: true,
     card: CARD({ when: '2020 &ndash; 2022 &middot; State College, PA', title: 'Raytheon Technologies', role: 'Systems Engineer I',
       stats: [['<em id="relN">7</em>', 'product releases managed and delivered'], ['Auto', 'release notes, Jira to Confluence']],
@@ -865,7 +1055,7 @@ const STOPS = [
             [padAt(6, 1.1), 'Cross-network delivery', 'Shipping to the higher networks', 'I built tooling that packages a release for the higher networks. On the other side, CI/CD unpacks it, merges it to Git, then tags and vets the merge automatically.'],
             [V(R.x + 0.1, RY + 2.1, R.z - 0.75), 'Release notes on autopilot', 'Release notes on autopilot', 'When a release fully cut over, an SQS event kicked off release notes: it pulled every epic and feature in the release from Jira and wrote the notes in Confluence. The same event wiring raised pipeline alerts.'],
             [padAt(0, 0.9), 'Developer tooling', 'Developer tooling', 'Tooling for local pipeline runs, promotion cleanup and retries. Expanded CI/CD support across Python, Puppet and Terraform repositories.']] },
-  { id: 'booz', name: 'Booz Allen', day: 0.55, year: 6, focus: B, cam: { p: V(B.x - 7.4, BY + 6.6, B.z + 10.4), t: V(B.x - 1.0, BY + 0.1, B.z + 0.9), fov: 32 },
+  { id: 'booz', resume: 'booz-allen', name: 'Booz Allen', season: [1, 0], day: 0.55, year: 6, focus: B, cam: { p: V(B.x - 7.4, BY + 6.6, B.z + 10.4), t: V(B.x - 1.0, BY + 0.1, B.z + 0.9), fov: 32 },
     card: CARD({ when: '2022 &ndash; now &middot; Remote', title: 'Booz Allen Hamilton', role: 'Senior DevOps Engineer / Lead Engineer',
       stats: [['8&ndash;10', 'Amazon EKS clusters operated'], ['Minutes', 'for a team to get its own Grafana']],
       bullets: ['Replaced hand-run OpenTofu for provisioning, bootstrapping and managing clusters with a hub-and-spoke control plane built on Crossplane, serving several teams',
@@ -885,7 +1075,7 @@ const STOPS = [
             [V(B.x - 0.55, BY + 1.45, B.z - 0.75), 'Leading the team', 'Leading the team', 'I became the team&rsquo;s lead: regular customer updates, solving problems with them, writing tickets, giving product direction, and mentoring and pair programming with teammates. People bring me hard problems because I can get them unstuck.'],
             [V(BOOZ[23].x, BOOZ[23].y + 0.7, BOOZ[23].z), 'AI agent skill', 'Data-safe AI agent skill', 'An agent skill that makes OpenTofu and Terraform code pull sensitive values through data lookups and build out variables as it goes, instead of hard-coding anything.'],
             [at(1.0, -4.6, 1.55), 'Recognition', 'Recognition', 'Most Innovative Employee award from my program. CompTIA Security+, 2024.']] },
-  { id: 'lab', name: 'The lab', day: 0.82, year: 7, focus: L, cam: { p: V(L.x - 4.6, LY + 4.2, L.z + 6.6), t: V(L.x - 1.2, LY + 0.5, L.z + 0.3), fov: 34 },
+  { id: 'lab', resume: 'projects', name: 'The lab', season: [0, 1], day: 0.88, year: 7, focus: L, cam: { p: V(L.x - 4.6, LY + 4.2, L.z + 6.6), t: V(L.x - 1.2, LY + 0.5, L.z + 0.3), fov: 34 },
     card: CARD({ when: 'Side projects', title: 'The lab', role: 'What I build on my own time',
       bullets: ['<b>Civic data platform.</b> York County parcel, zoning, environmental and municipal records in searchable maps and cited site reports',
         '<b>Clash of Clans attack simulator.</b> A 1:1 simulation built from the game&rsquo;s wiki data that plays thousands of attacks against top bases',
@@ -894,13 +1084,23 @@ const STOPS = [
     spots: [[at(gh(0).x, gh(0).z, 0.75), 'Civic data platform', 'Civic data platform', 'It started as a way to see what is being proposed or built near you, and grew into property research. Collecting the public data is the easy part. The hard part is using AI precisely enough to match one sentence in a municipal hearing note to the right property among millions of records. Some of the best data, permits and deeds, sits behind Right-to-Know requests I&rsquo;ve filed. React, FastAPI, PostgreSQL/PostGIS.'],
             [at(gh(1).x, gh(1).z, 0.75), 'Attack simulator', 'Clash of Clans attack simulator', 'A 1:1 simulator of how troops, spells, equipment and heroes move, built from the game&rsquo;s wiki data. AI coding agents combed the wiki and iterated on it for days, running overnight. It plays thousands of attack scenarios against top bases found online, and designs bases against the same strategies for ranked play.'],
             [at(gh(2).x, gh(2).z, 0.75), 'Self-hosted AI', 'Self-hosted AI on TrueNAS', 'Open WebUI deployed on TrueNAS as the front end, with OpenRouter behind it for access to many models. Part of a Proxmox and TrueNAS homelab.']] },
-  { id: 'contact', name: 'Contact', day: 0.72, year: 7, focus: B, cam: { p: V(-6, 24, 34), t: V(2.5, 0, 0.4), fov: 32 },
+  { id: 'contact', name: 'Contact', season: [0, 0.8], tilt: 0, day: 1.42, year: 7, focus: L, cam: { p: V(5.2, 2.7, 14.2), t: V(14.2, 1.9, 4.4), fov: 40 },
     card: '<small>Contact</small><h2>Jarod Daws</h2><p>DevOps and platform engineer. People bring me hard problems because I can get them unstuck.</p><p class="role" style="margin-top:10px">Open to remote roles and hybrid roles near York, PA.</p><div class="acts"><a class="btn primary" href="mailto:' + EMAIL + '">Email me</a><a class="btn" href="/resume">Resume</a></div><p class="fine">Security clearance details available on request.</p>' },
 ];
 const N = STOPS.length;
 let launchT0 = null;
+const QUALITY = { tilt: 1, rays: 1, level: 0, win: [], up: 0 };
+const PR_MAX = Math.min(devicePixelRatio, LITE ? 1.5 : 1.75), QP = Q.get('q');
+function applyQuality() { const L = QUALITY.level;
+  QUALITY.rays = L >= 1 ? 0 : 1; QUALITY.tilt = L >= 2 ? 0 : 1; TILT.enabled = L < 2 && !LITE; GODRAY.enabled = L < 1;
+  const pr = L >= 4 ? 0.75 : L >= 3 ? 1 : PR_MAX; if (renderer.getPixelRatio() !== pr) { renderer.setPixelRatio(pr); composer.setPixelRatio(pr); resize(); } }
+function watchQuality(dt) { // measured frame time decides how much detail this device gets
+  if (QP === 'max' || document.hidden || dt > 250) return; QUALITY.win.push(dt); if (QUALITY.win.length < 90) return;
+  const w = QUALITY.win.sort((a, b) => a - b), med = w[w.length >> 1]; QUALITY.win = [];
+  if (med > 24 && QUALITY.level < 4) { QUALITY.level++; QUALITY.up = 0; applyQuality(); }
+  else if (med < 13 && QUALITY.level > 0 && ++QUALITY.up >= 3) { QUALITY.level--; QUALITY.up = 0; applyQuality(); } }
 let cur = 0, from = null, trans = null, popOpen = null, autoplay = false, lastInput = 0;
-const view = { p: STOPS[0].cam.p.clone(), t: STOPS[0].cam.t.clone(), fov: STOPS[0].cam.fov, day: STOPS[0].day };
+const view = { p: STOPS[0].cam.p.clone(), t: STOPS[0].cam.t.clone(), fov: STOPS[0].cam.fov, day: STOPS[0].day, snow: 0, autumn: 0, tilt: 0.35 };
 const orbit = { yaw: 0, pitch: 0, ty: 0, tp: 0 };
 
 // ---- interface markup
@@ -908,7 +1108,7 @@ const STOP_NAMES = STOPS.slice(1, 5).map(s => s.name);
 const mx = x => 8 + (x + 21.5) / 37 * 160, mz = z => 8 + (z + 10.5) / 22 * 96;
 UI.innerHTML = `
   <div class="intro fade" id="introBox"><div class="tA"><small>2019 &rarr; today</small><h1>Jarod<br>Daws</h1><p><b>DevOps and platform engineer.</b><br>Cloud platforms and automation.</p>
-    <div class="acts"><button class="btn primary" id="startBtn">Start the tour</button><a class="btn" href="/resume">Resume</a></div></div>
+    <div class="acts"><button class="btn primary" id="startBtn">Start the tour</button><button class="btn" id="fastBtn">60-second version</button><a class="btn" href="/resume">Resume</a></div></div>
     <div class="hint">${LITE ? 'Swipe up to begin' : 'Scroll to begin'}<i></i></div></div>
   <div class="fade gone" id="chrome">
     <div class="ui-mark">Jarod Daws</div>
@@ -922,35 +1122,68 @@ UI.innerHTML = `
       <circle id="here" r="5" fill="#e39a3b" stroke="#fff" stroke-width="2" pointer-events="none"/></svg></div>
   </div>
   <div class="ui-top"><button class="pill" id="soundBtn" aria-pressed="true">&#9835;&nbsp; Sound on</button><a class="pill dark" href="/resume">Resume &rarr;</a></div>
-  <div id="spots"></div>`;
+  <div id="spots"></div>
+  <div id="caption" class="caption"></div>`;
 const $ = id => document.getElementById(id);
 const cardEl = $('card'), spotsEl = $('spots');
 
 function buildSpots(s) {
   spotsEl.innerHTML = ''; popOpen = null;
   (s.spots || []).forEach(([p, label, title, body, act], k) => {
-    const el = document.createElement('div'); el.className = 'hs'; el.style.opacity = 0;
+    const el = document.createElement('div'); el.className = 'hs' + (SEEN.has(s.id + '/' + slug(label)) ? ' seen' : ''); el.style.opacity = 0; el._slug = slug(label);
     el.innerHTML = '<div class="dot"></div><div class="tag">' + label + '</div>';
     el.addEventListener('click', e => { e.stopPropagation(); openPop(k); });
     el._p = p; el._title = title; el._body = body; el._act = act; spotsEl.appendChild(el);
   });
 }
-function openPop(k) {
+const slug = t => t.toLowerCase().replace(/&[a-z]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const SEEN = new Set((() => { try { return JSON.parse(localStorage.getItem('jd-seen') || '[]'); } catch (e) { return []; } })());
+let guide = null, pendingSpot = null;
+function updateSeen() {
+  const s = STOPS[cur], el = cardEl.querySelector('.seen-count'); if (!el || !s.spots) return;
+  const n = s.spots.length, k = s.spots.filter(sp => SEEN.has(s.id + '/' + slug(sp[1]))).length;
+  el.textContent = k === 0 ? n + ' things to explore' : k === n ? 'All ' + n + ' explored' : k + ' of ' + n + ' explored';
+}
+function markerCam(p) { // move in toward a marker while keeping the stop's viewing angle
+  const c = (W / H < 1 && STOPS[cur].camTall) || STOPS[cur].cam, dir = c.p.clone().sub(c.t), d = dir.length();
+  return { p: p.clone().add(dir.normalize().multiplyScalar(d * 0.62)), t: p.clone(), fov: c.fov };
+}
+function flyTo(c, dur = 1.6) {
+  trans = { a: { p: view.p.clone(), t: view.t.clone(), fov: view.fov }, b: c, mid: view.p.clone().lerp(c.p, 0.5).add(V(0, 0.6, 0)), t0: performance.now(), dur,
+    day0: view.day, day1: view.day, s0: [view.snow, view.autumn, view.tilt], s1: [view.snow, view.autumn, view.tilt] };
+  orbit.ty = orbit.tp = 0;
+}
+function startGuide() { const s = STOPS[cur]; if (!s.spots) return; guide = { stop: cur, k: -1 }; guideStep(1); }
+function guideStep(d) {
+  if (!guide || guide.stop !== cur) return;
+  guide.k += d; const s = STOPS[cur];
+  if (guide.k < 0) guide.k = 0;
+  if (guide.k >= s.spots.length) { endGuide(); return; }
+  flyTo(markerCam(s.spots[guide.k][0]), 1.5); openPop(guide.k, true);
+}
+function endGuide() { if (!guide) return; const s = STOPS[guide.stop]; guide = null; closePop(); if (s === STOPS[cur]) flyTo((W / H < 1 && s.camTall) || s.cam, 1.6); }
+function openPop(k, guided) {
   closePop();
   const el = spotsEl.children[k]; if (!el) return;
-  el.classList.add('on');
+  el.classList.add('on', 'seen');
+  const key = STOPS[cur].id + '/' + el._slug; SEEN.add(key); try { localStorage.setItem('jd-seen', JSON.stringify([...SEEN])); } catch (e) {}
+  updateSeen(); history.replaceState(null, '', '#' + key);
   const pop = document.createElement('div'); pop.className = 'pop';
   const ACTL = { provision: 'Provision a cluster', grafana: 'Apply the custom resource', migrate: 'Run the migration' };
-  pop.innerHTML = '<button class="x" aria-label="Close" style="background:none;border:0">&times;</button><small>' + STOPS[cur].name + '</small><h3>' + el._title + '</h3><p>' + el._body + '</p>' + (el._act ? '<button class="btn primary act">' + ACTL[el._act] + ' &rarr;</button><div class="status" hidden></div>' : '');
+  const total = STOPS[cur].spots.length;
+  pop.innerHTML = '<button class="x" aria-label="Close" style="background:none;border:0">&times;</button><small>' + STOPS[cur].name + '</small><h3>' + el._title + '</h3><p>' + el._body + '</p>' + (el._act ? '<button class="btn primary act">' + ACTL[el._act] + ' &rarr;</button><div class="status" hidden></div>' : '')
+    + '<div class="row"><button class="link copy">Copy link</button>' + (guided ? '<span class="guide">' + (k + 1) + ' of ' + total + '</span><button class="btn ' + (el._act ? '' : 'primary ') + 'gnext">' + (k + 1 < total ? 'Next &rarr;' : 'Done') + '</button>' : '') + '</div>';
+  pop.querySelector('.copy').addEventListener('click', ev => { ev.stopPropagation(); const u = location.origin + '/#' + key; (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(() => { ev.target.textContent = 'Link copied'; }, () => { ev.target.textContent = u; }); });
+  if (guided) pop.querySelector('.gnext').addEventListener('click', ev => { ev.stopPropagation(); lastInput = performance.now(); guideStep(1); });
   if (el._act) pop.querySelector('.act').addEventListener('click', ev => { ev.stopPropagation(); runAct(el._act, pop); });
-  pop.querySelector('.x').addEventListener('click', e => { e.stopPropagation(); closePop(); });
+  pop.querySelector('.x').addEventListener('click', e => { e.stopPropagation(); if (guide) endGuide(); else closePop(); });
   pop.addEventListener('click', e => e.stopPropagation());
-  spotsEl.appendChild(pop); popOpen = { el, pop }; positionPop(); audio.tick();
+  spotsEl.appendChild(pop); popOpen = { el, pop }; if (W < 760) setSheet('peek'); positionPop(); audio.tick();
 }
-function closePop() { if (!popOpen) return; popOpen.el.classList.remove('on'); popOpen.pop.remove(); popOpen = null; }
+function closePop() { if (!popOpen) return; popOpen.el.classList.remove('on'); popOpen.pop.remove(); popOpen = null; if (STOPS[cur] && STOPS[cur].id !== 'intro' && location.hash.includes('/')) history.replaceState(null, '', '#' + STOPS[cur].id); }
 function positionPop() {
   if (!popOpen) return; const { el, pop } = popOpen, x = parseFloat(el.style.left), y = parseFloat(el.style.top), pw = pop.offsetWidth, ph = pop.offsetHeight;
-  if (W >= 760) { pop.style.left = 'auto'; pop.style.right = '56px'; pop.style.top = '84px'; return; } // a side panel keeps the island in view
+  if (W >= 760) { pop.style.left = 'auto'; pop.style.right = '56px'; pop.style.top = fast ? '110px' : '84px'; return; } // a side panel keeps the island in view
   let left = x + 22, top = y - 50;
   if (left + pw > W - 12) left = x - 22 - pw;
   if (left < 12) left = Math.max(12, Math.min(W - pw - 12, x - pw / 2));
@@ -964,7 +1197,15 @@ function showStop(i) {
   $('chrome').classList.toggle('gone', i === 0);
   cardEl.classList.add('gone');
   setTimeout(() => { if (cur !== i) return; cardEl.innerHTML = s.card || ''; cardEl.classList.remove('open'); cardEl.classList.toggle('gone', !s.card);
-    const mb = cardEl.querySelector('.more-btn'); if (mb) mb.addEventListener('click', e => { e.stopPropagation(); cardEl.classList.toggle('open'); mb.textContent = cardEl.classList.contains('open') ? 'Less' : 'Details'; }); }, trans ? trans.dur * 650 : 0);
+    cardEl.insertAdjacentHTML('afterbegin', '<div class="sheet-h"></div>');
+    if (s.spots) { const mb0 = cardEl.querySelector('.more-btn'); const ex = '<div class="explore"><button class="btn primary show-btn">Show me &rarr;</button><span class="seen-count"></span></div>';
+      if (mb0) mb0.insertAdjacentHTML('beforebegin', ex); else cardEl.insertAdjacentHTML('beforeend', ex);
+      cardEl.querySelector('.show-btn').addEventListener('click', e => { e.stopPropagation(); lastInput = performance.now(); startGuide(); }); }
+    if (s.resume) cardEl.insertAdjacentHTML('beforeend', '<a class="reslink" href="/resume#' + s.resume + '">Read this on the resume &rarr;</a>');
+    updateSeen();
+    const mb = cardEl.querySelector('.more-btn'); if (mb) mb.addEventListener('click', e => { e.stopPropagation(); setSheet(cardEl.classList.contains('open') ? 'mid' : 'open'); });
+    if (W < 760) setSheet('mid');
+    if (pendingSpot !== null) { const k = pendingSpot; pendingSpot = null; setTimeout(() => openPop(k), 300); } }, trans ? trans.dur * 650 : 0);
   launchT0 = s.launch ? performance.now() + (trans ? trans.dur * 1000 : 0) + 400 : null;
   [...$('rail').children].forEach((d, k) => d.className = k <= (s.year ?? -1) ? 'on' : '');
   $('count').innerHTML = i > 0 && i < 5 ? i + ' / 4 &nbsp;' + s.name : s.name || '';
@@ -977,22 +1218,55 @@ function showStop(i) {
 function go(i, opts = {}) {
   i = Math.max(0, Math.min(N - 1, i));
   if (i === cur && !opts.force) return;
-  closePop();
+  guide = null; closePop();
   const a = { p: view.p.clone(), t: view.t.clone(), fov: view.fov, day: view.day }, b = (W / H < 1 && STOPS[i].camTall) || STOPS[i].cam;
   const dist = a.p.distanceTo(b.p);
   const mid = a.p.clone().lerp(b.p, 0.5); mid.y += Math.min(9, dist * 0.22);
   if (cur === 0 && i === 1) { mid.copy(FLY.getPoint(0.5)); }
-  trans = { a, b, mid, t0: performance.now(), dur: opts.instant ? 0 : Math.min(3.4, 1.8 + dist * 0.035), day0: view.day, day1: STOPS[i].day };
+  trans = { a, b, mid, t0: performance.now(), dur: opts.instant ? 0 : Math.min(3.4, 1.8 + dist * 0.035), day0: view.day, day1: STOPS[i].day,
+    s0: [view.snow, view.autumn, view.tilt], s1: [...(STOPS[i].season || [0, 0]), STOPS[i].tilt ?? 1] };
   orbit.ty = orbit.tp = 0;
   cur = i; showStop(i);
   if (!opts.instant) audio.move();
 }
 const next = () => go(cur + 1), prev = () => go(cur - 1);
+function setSheet(state) { // peek, mid or open
+  cardEl.classList.toggle('peek', state === 'peek'); cardEl.classList.toggle('open', state === 'open');
+  spotsEl.classList.toggle('covered', W < 760 && state === 'open');
+  const mb = cardEl.querySelector('.more-btn'); if (mb) mb.textContent = state === 'open' ? 'Less' : 'Details';
+}
+{ let sy = null, moved = 0;
+  cardEl.addEventListener('pointerdown', e => { if (W >= 760 || e.target.closest('button,a')) return; sy = e.clientY; moved = 0; e.stopPropagation(); });
+  cardEl.addEventListener('pointermove', e => { if (sy === null) return; moved = e.clientY - sy; cardEl.style.transform = 'translateY(' + Math.max(-40, Math.min(160, moved)) + 'px)'; });
+  const end = () => { if (sy === null) return; cardEl.style.transform = ''; const st = cardEl.classList.contains('open') ? 'open' : cardEl.classList.contains('peek') ? 'peek' : 'mid';
+    if (moved < -30) setSheet(st === 'peek' ? 'mid' : 'open'); else if (moved > 30) setSheet(st === 'open' ? 'mid' : 'peek'); else if (Math.abs(moved) < 6) setSheet(st === 'peek' ? 'mid' : st); sy = null; };
+  cardEl.addEventListener('pointerup', end); cardEl.addEventListener('pointercancel', end); }
 
 // ---- input
-function user() { lastInput = performance.now(); if (autoplay) setAuto(false); }
+function user() { lastInput = performance.now(); if (autoplay) setAuto(false); if (fast) endFast(); if (guide) guide = null; }
 function setAuto(on) { autoplay = on; $('playBtn').innerHTML = on ? '&#10074;&#10074;' : '&#9654;'; $('playBtn').setAttribute('aria-label', on ? 'Pause the tour' : 'Play the tour'); autoNext = performance.now() + 2500; }
 let autoNext = 0;
+const FAST = [null,
+  { dwell: 4.5, cap: ['B.S. Electrical Engineering, Penn State, 2019'] },
+  { dwell: 10, cap: ['Systems Engineer I &middot; Raytheon &middot; 2020&ndash;2022', 'Managed and delivered seven product releases', 'Automated cross-network delivery and release notes'] },
+  { dwell: 13, cap: ['Senior DevOps / Lead Engineer &middot; Booz Allen &middot; 2022&ndash;now', 'Built a hub-and-spoke control plane that provisions EKS clusters from Git', 'Runs 8&ndash;10 EKS clusters; a Go operator gives teams their own Grafana in minutes', 'Most Innovative Employee award'], act: 'provision' },
+  { dwell: 7, cap: ['Side projects: a civic data platform, a game simulator, self-hosted AI'] },
+  { dwell: 6, cap: ['People bring me hard problems because I can get them unstuck.'] }];
+let fast = null;
+const capEl = () => $('caption');
+function startFast() { fast = { t0: performance.now(), arrived: null }; UI.classList.add('fast'); UI.insertAdjacentHTML('beforeend', '<div class="fastbar" id="fastbar"><span>60-second version</span><i><s id="fastprog"></s></i><button id="fastStop" style="font:500 12px Inter;background:none;border:0;cursor:pointer;text-decoration:underline;color:#132430">Stop</button></div>');
+  $('fastStop').addEventListener('click', e => { e.stopPropagation(); endFast(); }); go(1); }
+function endFast() { fast = null; UI.classList.remove('fast'); const b = $('fastbar'); if (b) b.remove(); capEl().classList.remove('on'); }
+function tickFast(now) {
+  if (!fast) return;
+  $('fastprog').style.width = Math.min(100, (now - fast.t0) / 600) + '%';
+  if (trans) return;
+  if (fast.arrived === null) { fast.arrived = now; if (FAST[cur].act) runAct(FAST[cur].act, null); }
+  const el = (now - fast.arrived) / 1000, F = FAST[cur], per = F.dwell / F.cap.length, ci = Math.min(F.cap.length - 1, Math.floor(el / per)), c = capEl(), key = cur + ':' + ci;
+  if (c.dataset.k !== key) { c.dataset.k = key; c.classList.remove('on'); const html = '<small>' + STOPS[cur].name + '</small>' + F.cap[ci]; setTimeout(() => { if (!fast || c.dataset.k !== key) return; c.innerHTML = html; c.classList.add('on'); }, 260); }
+  if (el > F.dwell) { if (cur < N - 1) { fast.arrived = null; go(cur + 1); } else setTimeout(endFast, 1500); }
+}
+$('fastBtn').addEventListener('click', e => { e.stopPropagation(); lastInput = performance.now(); startFast(); });
 $('startBtn').addEventListener('click', e => { e.stopPropagation(); user(); go(1); });
 $('nextBtn').addEventListener('click', e => { e.stopPropagation(); user(); next(); });
 $('prevBtn').addEventListener('click', e => { e.stopPropagation(); user(); prev(); });
@@ -1089,9 +1363,9 @@ function grafanaTower(base) {
   post.position.y = 0.21; const scr = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.22, 0.025), [glowMat, glowMat, glowMat, glowMat, panelMat, glowMat]); scr.position.y = 0.5;
   g.add(post, scr); g.position.copy(base); g.scale.set(1, 0.001, 1); g.rotation.y = Math.atan2(camera.position.x - base.x, camera.position.z - base.z); scene.add(g); return g;
 }
-function status(pop, lines) { const s = pop && pop.querySelector('.status'); if (s) { s.hidden = false; s.textContent = lines; } }
+function status(pop, lines) { const s = pop && pop.isConnected && pop.querySelector('.status'); if (s) { s.hidden = false; s.textContent = lines; } }
 function runAct(kind, pop) {
-  const btn = pop.querySelector('.act'); if (btn) btn.disabled = true, btn.style.opacity = 0.5;
+  const btn = pop && pop.querySelector('.act'); if (btn) btn.disabled = true, btn.style.opacity = 0.5;
   const t0 = performance.now(); audio.tick();
   if (kind === 'grafana') {
     const h = BOOZ[9], base = V(h.x + 0.3, h.y, h.z - 0.18);
@@ -1147,11 +1421,13 @@ function tickFX(now, t) {
 // ---- resize
 function resize() {
   W = innerWidth; H = innerHeight;
-  renderer.setSize(W, H); composer.setSize(W, H); GRADE.uRes.value.set(W, H);
+  renderer.setSize(W, H); composer.setSize(W, H); GRADE.uRes.value.set(W, H); TILT.uniforms.uRes.value.set(W, H);
   camera.aspect = W / H; camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize);
-addEventListener('hashchange', () => { const k = STOPS.findIndex(s => s.id === location.hash.slice(1)); if (k >= 0 && k !== cur) go(k); });
+function fromHash() { const [sid, sp] = location.hash.slice(1).split('/'); const k = STOPS.findIndex(s => s.id === sid); if (k < 0) return -1;
+  const j = sp && STOPS[k].spots ? STOPS[k].spots.findIndex(x => slug(x[1]) === sp) : -1; return { k, j }; }
+addEventListener('hashchange', () => { const r = fromHash(); if (r === -1) return; if (r.k !== cur) { pendingSpot = r.j >= 0 ? r.j : null; go(r.k); } else if (r.j >= 0 && (!popOpen || popOpen.el !== spotsEl.children[r.j])) openPop(r.j); });
 
 // ---- frame loop
 const ease = x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -1161,14 +1437,18 @@ function setDayLive(d) {
   const needEnv = Math.abs(d - lastDayEnv) > 0.015;
   ENV_SKIP = !needEnv; setDay(d); ENV_SKIP = false; if (needEnv) lastDayEnv = d;
 }
+let lastNow = 0;
 function frame(now) {
   requestAnimationFrame(frame);
+  watchQuality(now - lastNow); lastNow = now; tickFast(now);
   const t = (now - clock0) / 1000;
   if (trans) {
     const k = trans.dur ? Math.min(1, (now - trans.t0) / (trans.dur * 1000)) : 1, e = ease(k);
     q1.copy(trans.a.p).lerp(trans.mid, e); q2.copy(trans.mid).lerp(trans.b.p, e); view.p.copy(q1).lerp(q2, e);
     view.t.copy(trans.a.t).lerp(trans.b.t, e); view.fov = trans.a.fov + (trans.b.fov - trans.a.fov) * e;
     view.day = trans.day0 + (trans.day1 - trans.day0) * e;
+    view.snow = trans.s0[0] + (trans.s1[0] - trans.s0[0]) * e; view.autumn = trans.s0[1] + (trans.s1[1] - trans.s0[1]) * e;
+    view.tilt = trans.s0[2] + (trans.s1[2] - trans.s0[2]) * e - Math.sin(k * Math.PI) * 0.35; // focus pulls loosen mid-flight
     if (k >= 1) { trans = null; autoNext = now + (STOPS[cur].launch ? 14000 : 10000); }
   }
   if (autoplay && !trans && now > autoNext) { if (cur < N - 1) next(); else setAuto(false); }
@@ -1187,6 +1467,11 @@ function frame(now) {
   if (asp < 1 && cur > 0) camera.setViewOffset(W, H * 1.3, 0, H * 0.3, W, H); else camera.clearViewOffset();
   camera.updateProjectionMatrix();
   if (frameN % 3 === 0 || trans) setDayLive(view.day);
+  LIFE.uTime.value = t; LIFE.uSnow.value = view.snow; LIFE.uAutumn.value = view.autumn;
+  BEAM.rotation.y = t * 0.6;
+  { const fv = view.t.clone().project(camera); TILT.uniforms.uFocus.value = Math.min(0.85, Math.max(0.15, fv.y * 0.5 + 0.5)); TILT.uniforms.uAmount.value = Math.max(0, view.tilt) * QUALITY.tilt;
+    const sv = SKY.sunDir.value.clone().multiplyScalar(200).add(camera.position).project(camera); GODRAY.uniforms.uSun.value.set(sv.x * 0.5 + 0.5, sv.y * 0.5 + 0.5);
+    GODRAY.uniforms.uOn.value = sv.z < 1 ? Math.max(0, 1 - Math.max(Math.abs(sv.x), Math.abs(sv.y)) * 0.55) * QUALITY.rays : 0; }
   animate(t); tickFX(now, t); GRADE.uSeed.value = (t * 61.7) % 100;
   skyDome.position.copy(camera.position);
   composer.render();
@@ -1212,12 +1497,12 @@ function frame(now) {
 }
 
 // ---- start
-const startId = location.hash.slice(1), startIdx = Math.max(0, STOPS.findIndex(s => s.id === startId));
+const startHash = fromHash(), startIdx = startHash === -1 ? 0 : startHash.k; if (startHash !== -1 && startHash.j >= 0) pendingSpot = startHash.j;
 setDay(STOPS[startIdx].day); lastDayEnv = STOPS[startIdx].day;
 cur = -1; view.day = STOPS[startIdx].day; go(startIdx, { instant: true, force: true });
 loadbar.style.width = '100%';
 requestAnimationFrame(t => { frame(t); const ld = $('loading'); ld.style.opacity = 0; setTimeout(() => ld.remove(), 1000); });
 window.__done = true;
-window.__tour = { go, next, prev, get cur() { return cur; }, openPop, STOPS };
+window.__tour = { shot(p, t, fov, day, tilt) { closePop(); UI.style.display = 'none'; view.day = day; view.tilt = tilt; flyTo({ p: V(...p), t: V(...t), fov }, 0); }, go, next, prev, get cur() { return cur; }, openPop, STOPS };
 </script>
 </body></html>
