@@ -86,7 +86,13 @@
   .more li{margin-bottom:6px}
   .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
   .chips span{font:500 11.5px Inter;color:#3e5363;background:rgba(19,36,48,.06);border:1px solid rgba(19,36,48,.1);border-radius:999px;padding:4px 10px}
-  .more-btn{display:none}
+  .more{display:none}
+  .card.open .more{display:block}
+  .card.stop{max-height:calc(100vh - 160px);overflow:auto;pointer-events:auto}
+  .more-btn{display:inline-block;margin-top:14px;font:500 13px Inter;color:#132430;background:rgba(19,36,48,.07);border:1px solid rgba(19,36,48,.14);border-radius:999px;padding:7px 14px;cursor:pointer}
+  .pop .status{margin-top:12px;font:500 12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#1f6f5a;background:rgba(31,111,90,.08);border-radius:6px;padding:8px 10px;white-space:pre-line}
+  .pop .act{margin-top:12px}
+  @media (min-width: 761px){ .pop{width:330px;max-height:calc(100vh - 200px);overflow:auto} }
   .card .fine{margin-top:16px;font:400 13px Inter;color:#5a6a76}
   .hs{cursor:pointer;transition:opacity .4s}
   .hs:hover .dot,.hs.on .dot{transform:scale(1.18)}
@@ -562,6 +568,7 @@ for (let i = 0; i < 9; i++) {
 }
 [MA, MB].forEach(p => { const y = ground(p.x, p.z); add(new THREE.BoxGeometry(0.6, 0.5, 0.5), stone, p.x, y + 0.25, p.z); add(new THREE.CylinderGeometry(0.04, 0.04, 1.2, 6), timber, p.x, y + 1.0, p.z); });
 }
+const GONDOLAS = [];
 // Migration: a cable car carrying crates across a valley between the two stations
 const off = V(Math.cos(cabRot), 0, -Math.sin(cabRot)).multiplyScalar(BLENDER ? 0.18 : 0);
 const cA = V(MA.x, ground(MA.x, MA.z) + 1.55, MA.z).add(off), cB = V(MB.x, ground(MB.x, MB.z) + 1.55, MB.z).sub(off);
@@ -569,7 +576,7 @@ const cable = new THREE.QuadraticBezierCurve3(cA, cA.clone().lerp(cB, 0.5).add(V
 scene.add(new THREE.Mesh(new THREE.TubeGeometry(cable, 30, 0.012, 5, false), slate));
 for (let i = 1; i < 5; i++) {
   const p = cable.getPoint(i / 5);
-  if (BLENDER) place('gondola', p.x, p.y, p.z, cabRot, 1.0);
+  if (BLENDER) GONDOLAS.push(place('gondola', p.x, p.y, p.z, cabRot, 1.0));
   else if (!EXPORT) add(new THREE.BoxGeometry(0.2, 0.16, 0.16), timber, p.x, p.y - 0.15, p.z);
   else BOOZ.push({ name: 'gondola', x: p.x, y: p.y, z: p.z, rot: cabRot, s: 1 });
 }
@@ -832,7 +839,7 @@ const gh = j => { const a = j / 3 * Math.PI * 2 + 1.25; return V(L.x + Math.cos(
 const at = (x, z, up) => V(x, ground(x, z) + up, z);
 const pad0 = (() => { const a = -0.3 + 3 / 6 * Math.PI * 1.25; return V(R.x + Math.cos(a) * 2.2, RY + 0.75, R.z + Math.sin(a) * 1.9 + 0.2); })();
 const rocketTip = (() => { const a = -0.3 + 6 / 6 * Math.PI * 1.25, px = R.x + Math.cos(a) * 2.2, pz = R.z + Math.sin(a) * 1.9 + 0.2, hh = 2.6 + 6 * 0.6; return V(px + Math.cos(a) * 1.6, RY + hh, pz + Math.sin(a) * 1.6); })();
-const C = o => `<small>${o.when}</small><h2>${o.title}</h2><p class="role">${o.role}</p>`
+const CARD = o => `<small>${o.when}</small><h2>${o.title}</h2><p class="role">${o.role}</p>`
   + (o.stats ? '<div class="stats">' + o.stats.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join('') + '</div>' : '')
   + (o.bullets ? '<button class="more-btn" type="button">Details</button><div class="more"><ul>' + o.bullets.map(b => `<li>${b}</li>`).join('') + '</ul>'
   + (o.tools ? '<div class="chips">' + o.tools.map(t => `<span>${t}</span>`).join('') + '</div>' : '') + '</div>' : '');
@@ -840,51 +847,55 @@ const padAt = (i, up) => { const a = -0.3 + i / 6 * Math.PI * 1.25; return V(R.x
 const STOPS = [
   { id: 'intro', day: 0.02, cam: { p: V(-25.5, 1.5, 15.5), t: V(-6.6, 1.7, -5.1), fov: 38 } },
   { id: 'penn', name: 'Penn State', day: 0.07, year: 0, focus: PS, cam: { p: V(-20.0, 6.8, 16.6), t: V(-18.4, 0.9, 8.6), fov: 32 }, camTall: { p: V(-19.0, 7.4, 17.2), t: V(-17.4, 0.9, 8.9), fov: 32 },
-    card: C({ when: '2019', title: 'Penn State', role: 'B.S. Electrical Engineering &middot; Penn State Harrisburg' }),
+    card: CARD({ when: '2019', title: 'Penn State', role: 'B.S. Electrical Engineering &middot; Penn State Harrisburg' }),
     spots: [[at(-16.45, 9.45, 1.7), 'Campus', 'Penn State Harrisburg', 'B.S. Electrical Engineering, 2019.'],
             [at(-18.45, 8.3, 0.75), 'Beaver Stadium', 'Beaver Stadium', 'Home of Penn State football.']] },
   { id: 'raytheon', name: 'Raytheon', day: 0.3, year: 2, focus: R, cam: { p: V(R.x - 6.8, RY + 6.0, R.z + 9.6), t: V(R.x - 1.6, RY + 1.0, R.z + 0.6), fov: 34 },
     launch: true,
-    card: C({ when: '2020 &ndash; 2022 &middot; State College, PA', title: 'Raytheon Technologies', role: 'Systems Engineer I',
-      stats: [['<em id="relN">7</em>', 'product releases managed and delivered'], ['CI/CD', 'production pipeline']],
-      bullets: ['Managed and delivered seven product releases, with repeatable tooling for release preparation and promotion',
-        'Maintained and improved a production DevOps pipeline, troubleshooting CI/CD failures and release-promotion issues',
-        'Expanded CI/CD support across Python, Puppet and Terraform repositories',
-        'Built developer tooling for local pipeline runs, promotion cleanup and retries, and automated release notes',
-        'Implemented event-driven delivery automation with AWS SQS, S3 events and Jenkins'],
-      tools: ['Jenkins', 'Python', 'Puppet', 'Terraform', 'AWS SQS', 'S3'] }),
-    spots: [[V(R.x - 0.3, RY + 1.6, R.z - 0.4), 'CI/CD pipeline', 'CI/CD pipeline', 'Maintained and improved a production DevOps pipeline, troubleshooting CI/CD failures and release-promotion issues.'],
-            [padAt(3, 0.95), 'Seven releases', 'Seven releases', 'Managed and delivered seven product releases. Each launch pad here is one of them. I built repeatable tooling for release preparation and promotion so each release went out the same way.'],
-            [V(R.x + 0.1, RY + 2.1, R.z - 0.75), 'Event-driven delivery', 'Event-driven delivery', 'Delivery automation driven by AWS SQS, S3 events and Jenkins.'],
-            [padAt(0, 0.9), 'Developer tooling', 'Developer tooling', 'Tooling for local pipeline runs, promotion cleanup and retries, and automated release notes. Expanded CI/CD support across Python, Puppet and Terraform repositories.']] },
+    card: CARD({ when: '2020 &ndash; 2022 &middot; State College, PA', title: 'Raytheon Technologies', role: 'Systems Engineer I',
+      stats: [['<em id="relN">7</em>', 'product releases managed and delivered'], ['Auto', 'release notes, Jira to Confluence']],
+      bullets: ['Managed seven product releases: cut a release branch through the full CI/CD pipeline, promote it to the test servers, then roll test into main and main back into test',
+        'Kept a sprawl of microservice dependencies in check, where one change meant version bumps across many other services',
+        'Built tooling that packages a release for the higher networks; CI/CD on the other side unpacks it, merges it to Git, then tags and vets the merge',
+        'Event-driven automation with AWS SQS, S3 and Jenkins: pipeline alerts, and release notes generated on cutover from the epics and features in Jira, published to Confluence',
+        'Developer tooling for local pipeline runs, promotion cleanup and retries'],
+      tools: ['Jenkins', 'Python', 'Puppet', 'Terraform', 'AWS SQS', 'S3', 'Jira', 'Confluence'] }),
+    spots: [[padAt(3, 0.95), 'Seven releases', 'Seven releases', 'Each launch is one release. A release branch went through the full CI/CD pipeline, then to the test servers. Once proven, test rolled into main and main back into test.'],
+            [V(R.x - 0.3, RY + 1.6, R.z - 0.4), 'Dependency wrangling', 'Keeping dependencies in line', 'The microservices depended on each other, so one change meant version bumps across many services. Keeping that consistent release after release was most of the job.'],
+            [padAt(6, 1.1), 'Cross-network delivery', 'Shipping to the higher networks', 'I built tooling that packages a release for the higher networks. On the other side, CI/CD unpacks it, merges it to Git, then tags and vets the merge automatically.'],
+            [V(R.x + 0.1, RY + 2.1, R.z - 0.75), 'Release notes on autopilot', 'Release notes on autopilot', 'When a release fully cut over, an SQS event kicked off release notes: it pulled every epic and feature in the release from Jira and wrote the notes in Confluence. The same event wiring raised pipeline alerts.'],
+            [padAt(0, 0.9), 'Developer tooling', 'Developer tooling', 'Tooling for local pipeline runs, promotion cleanup and retries. Expanded CI/CD support across Python, Puppet and Terraform repositories.']] },
   { id: 'booz', name: 'Booz Allen', day: 0.55, year: 6, focus: B, cam: { p: V(B.x - 7.4, BY + 6.6, B.z + 10.4), t: V(B.x - 1.0, BY + 0.1, B.z + 0.9), fov: 32 },
-    card: C({ when: '2022 &ndash; now &middot; Remote', title: 'Booz Allen Hamilton', role: 'Senior DevOps Engineer / Lead Engineer',
-      stats: [['8&ndash;10', 'Amazon EKS clusters operated'], ['Beta', 'hub-and-spoke platform with customers']],
-      bullets: ['Architected a hub-and-spoke EKS management platform that provisions and operates customer workload clusters from a central control plane',
-        'Designed Crossplane compositions with OpenTofu, AWS, Kubernetes and composition-function providers for declarative cluster lifecycle',
-        'Built a Go Kubernetes operator that automates Prometheus and Grafana deployment into customer environments',
-        'Built Python tooling for a multi-terabyte migration between secure environments',
-        'Lead technical delivery for the team and serve as the main point of contact for customer stakeholders'],
-      tools: ['Amazon EKS', 'Crossplane', 'OpenTofu', 'Terraform', 'FluxCD', 'Go', 'Python'] }),
-    spots: [[V(B.x, BY + 2.0, B.z), 'Control plane', 'Hub-and-spoke control plane', 'A central control plane that provisions and operates customer workload clusters declaratively, built with Crossplane compositions and OpenTofu. Now in customer beta.'],
-            [V(houseA.x, houseA.y + 0.7, houseA.z), 'EKS fleet', 'EKS fleet', 'Operate a fleet of 8&ndash;10 Amazon EKS clusters: upgrades, hardening and day-2 operations.'],
-            [V(gpuH.x, gpuH.y + 0.75, gpuH.z), 'GPU node pools', 'GPU node pools', 'The larger clusters run separate node pools for general workloads, CI runners and GPU jobs.'],
-            [cable.getPoint(0.5).add(V(0, 0.1, 0)), 'Platform migration', 'Platform migration', 'Python tooling for a multi-terabyte migration between secure environments: source projects, CI/CD configuration and container images.'],
-            [V(B.x - 0.55, BY + 1.45, B.z - 0.75), 'AI agent skill', 'Data-safe AI agent skill', 'An agent skill that makes OpenTofu and Terraform code pull sensitive values through data lookups and build out variables as it goes, instead of hard-coding anything.'],
-            [V(BOOZ[14].x, BOOZ[14].y + 0.7, BOOZ[14].z), 'Observability operator', 'Observability operator', 'A Go Kubernetes operator that automates Prometheus and Grafana deployment into customer environments. Custom resources describe the monitoring stack and the operator keeps it in place.'],
-            [V(BOOZ[22].x, BOOZ[22].y + 0.7, BOOZ[22].z), 'Baselines and automation', 'Platform baselines and automation', 'Standardized Terraform modules for repeatable hardened-platform deployments, automated CI runner infrastructure, and Go CLIs, Python and AWS Lambda functions for recurring operations such as credential-expiry alerting.'],
-            [at(1.0, -4.6, 1.55), 'Security+', 'CompTIA Security+', 'Certified 2024.']] },
+    card: CARD({ when: '2022 &ndash; now &middot; Remote', title: 'Booz Allen Hamilton', role: 'Senior DevOps Engineer / Lead Engineer',
+      stats: [['8&ndash;10', 'Amazon EKS clusters operated'], ['Minutes', 'for a team to get its own Grafana']],
+      bullets: ['Replaced hand-run OpenTofu for provisioning, bootstrapping and managing clusters with a hub-and-spoke control plane built on Crossplane, serving several teams',
+        'Designed how variables flow dynamically into existing Kustomizations and repositories',
+        'Built a Go operator: a team on a multi-tenant cluster adds one custom resource and gets its own Grafana with its own metrics and logs within minutes',
+        'Migrated an entire GitLab, 100+ projects, between secure environments with multipart transfers reassembled on the far side',
+        'Keep GPU node pools current by rolling them onto AMIs with updated NVIDIA drivers',
+        'Stepped up as lead: customer updates, product direction, ticket writing, mentoring and pair programming',
+        'On-site upgrades every two weeks, and an overnight cutover migrating applications to OpenShift',
+        'Most Innovative Employee award from my program'],
+      tools: ['Amazon EKS', 'Crossplane', 'OpenTofu', 'FluxCD', 'Kustomize', 'Go', 'Python', 'Grafana', 'OpenShift'] }),
+    spots: [[V(B.x, BY + 2.0, B.z), 'Control plane', 'Hub-and-spoke control plane', 'Clusters used to be provisioned, bootstrapped and managed by running OpenTofu by hand. Now a central control plane does it declaratively for several teams. We kept our OpenTofu and wrapped it in Crossplane compositions, after weighing Cluster API and Flux&rsquo;s OpenTofu controller. The hardest part was passing variables dynamically into existing Kustomizations and repositories.', 'provision'],
+            [V(BOOZ[9].x, BOOZ[9].y + 0.7, BOOZ[9].z), 'Observability operator', 'Grafana in minutes', 'Teams on a shared multi-tenant cluster had no way to see their own metrics and logs. My Go operator fixed that: add one custom resource, and within minutes the team has its own Grafana showing only its own data.', 'grafana'],
+            [cable.getPoint(0.5).add(V(0, 0.1, 0)), 'GitLab migration', 'Moving an entire GitLab', 'We migrated a whole GitLab, 100+ projects, between secure environments. Everything went through a transfer service as multipart uploads and was pieced back together on the other side.', 'migrate'],
+            [V(gpuH.x, gpuH.y + 0.75, gpuH.z), 'GPU node pools', 'GPU node pools', 'I keep the GPU nodes current: bake AMIs with updated NVIDIA drivers and packages, then roll the nodes onto them. Customer workloads run on them without complaints.'],
+            [V(houseA.x, houseA.y + 0.7, houseA.z), 'EKS fleet', 'EKS fleet', 'A fleet of 8&ndash;10 Amazon EKS clusters, with general, CI runner and GPU node pools. Hands-on too: on-site upgrades every two weeks, and a night spent migrating applications to OpenShift.'],
+            [V(B.x - 0.55, BY + 1.45, B.z - 0.75), 'Leading the team', 'Leading the team', 'I became the team&rsquo;s lead: regular customer updates, solving problems with them, writing tickets, giving product direction, and mentoring and pair programming with teammates. People bring me hard problems because I can get them unstuck.'],
+            [V(BOOZ[23].x, BOOZ[23].y + 0.7, BOOZ[23].z), 'AI agent skill', 'Data-safe AI agent skill', 'An agent skill that makes OpenTofu and Terraform code pull sensitive values through data lookups and build out variables as it goes, instead of hard-coding anything.'],
+            [at(1.0, -4.6, 1.55), 'Recognition', 'Recognition', 'Most Innovative Employee award from my program. CompTIA Security+, 2024.']] },
   { id: 'lab', name: 'The lab', day: 0.82, year: 7, focus: L, cam: { p: V(L.x - 4.6, LY + 4.2, L.z + 6.6), t: V(L.x - 1.2, LY + 0.5, L.z + 0.3), fov: 34 },
-    card: C({ when: 'Side projects', title: 'The lab', role: 'What I build on my own time',
+    card: CARD({ when: 'Side projects', title: 'The lab', role: 'What I build on my own time',
       bullets: ['<b>Civic data platform.</b> York County parcel, zoning, environmental and municipal records in searchable maps and cited site reports',
-        '<b>Clash of Clans attack simulator.</b> Test army and hero setups before spending an attack in ranked play',
+        '<b>Clash of Clans attack simulator.</b> A 1:1 simulation built from the game&rsquo;s wiki data that plays thousands of attacks against top bases',
         '<b>Self-hosted AI.</b> Open WebUI on TrueNAS with OpenRouter behind it, part of a Proxmox and TrueNAS homelab'],
-      tools: ['React', 'FastAPI', 'PostgreSQL/PostGIS', 'TrueNAS', 'Proxmox', 'Open WebUI'] }),
-    spots: [[at(gh(0).x, gh(0).z, 0.75), 'Civic data platform', 'Civic data platform', 'Started as a way to see what is being proposed or built in your area. Now property research: York County parcel, zoning, environmental and municipal records in searchable maps and cited site reports. React, FastAPI, PostgreSQL/PostGIS.'],
-            [at(gh(1).x, gh(1).z, 0.75), 'Attack simulator', 'Clash of Clans attack simulator', 'Test army and hero setups against a base before spending an attack in ranked play.'],
+      tools: ['React', 'FastAPI', 'PostgreSQL/PostGIS', 'AI agents', 'TrueNAS', 'Proxmox', 'Open WebUI'] }),
+    spots: [[at(gh(0).x, gh(0).z, 0.75), 'Civic data platform', 'Civic data platform', 'It started as a way to see what is being proposed or built near you, and grew into property research. Collecting the public data is the easy part. The hard part is using AI precisely enough to match one sentence in a municipal hearing note to the right property among millions of records. Some of the best data, permits and deeds, sits behind Right-to-Know requests I&rsquo;ve filed. React, FastAPI, PostgreSQL/PostGIS.'],
+            [at(gh(1).x, gh(1).z, 0.75), 'Attack simulator', 'Clash of Clans attack simulator', 'A 1:1 simulator of how troops, spells, equipment and heroes move, built from the game&rsquo;s wiki data. AI coding agents combed the wiki and iterated on it for days, running overnight. It plays thousands of attack scenarios against top bases found online, and designs bases against the same strategies for ranked play.'],
             [at(gh(2).x, gh(2).z, 0.75), 'Self-hosted AI', 'Self-hosted AI on TrueNAS', 'Open WebUI deployed on TrueNAS as the front end, with OpenRouter behind it for access to many models. Part of a Proxmox and TrueNAS homelab.']] },
   { id: 'contact', name: 'Contact', day: 0.72, year: 7, focus: B, cam: { p: V(-6, 24, 34), t: V(2.5, 0, 0.4), fov: 32 },
-    card: '<small>Contact</small><h2>Jarod Daws</h2><p>DevOps and platform engineer. Open to remote roles and hybrid roles near York, PA.</p><div class="acts"><a class="btn primary" href="mailto:' + EMAIL + '">Email me</a><a class="btn" href="/resume">Resume</a></div><p class="fine">Security clearance details available on request.</p>' },
+    card: '<small>Contact</small><h2>Jarod Daws</h2><p>DevOps and platform engineer. People bring me hard problems because I can get them unstuck.</p><p class="role" style="margin-top:10px">Open to remote roles and hybrid roles near York, PA.</p><div class="acts"><a class="btn primary" href="mailto:' + EMAIL + '">Email me</a><a class="btn" href="/resume">Resume</a></div><p class="fine">Security clearance details available on request.</p>' },
 ];
 const N = STOPS.length;
 let launchT0 = null;
@@ -917,11 +928,11 @@ const cardEl = $('card'), spotsEl = $('spots');
 
 function buildSpots(s) {
   spotsEl.innerHTML = ''; popOpen = null;
-  (s.spots || []).forEach(([p, label, title, body], k) => {
+  (s.spots || []).forEach(([p, label, title, body, act], k) => {
     const el = document.createElement('div'); el.className = 'hs'; el.style.opacity = 0;
     el.innerHTML = '<div class="dot"></div><div class="tag">' + label + '</div>';
     el.addEventListener('click', e => { e.stopPropagation(); openPop(k); });
-    el._p = p; el._title = title; el._body = body; spotsEl.appendChild(el);
+    el._p = p; el._title = title; el._body = body; el._act = act; spotsEl.appendChild(el);
   });
 }
 function openPop(k) {
@@ -929,7 +940,9 @@ function openPop(k) {
   const el = spotsEl.children[k]; if (!el) return;
   el.classList.add('on');
   const pop = document.createElement('div'); pop.className = 'pop';
-  pop.innerHTML = '<button class="x" aria-label="Close" style="background:none;border:0">&times;</button><small>' + STOPS[cur].name + '</small><h3>' + el._title + '</h3><p>' + el._body + '</p>';
+  const ACTL = { provision: 'Provision a cluster', grafana: 'Apply the custom resource', migrate: 'Run the migration' };
+  pop.innerHTML = '<button class="x" aria-label="Close" style="background:none;border:0">&times;</button><small>' + STOPS[cur].name + '</small><h3>' + el._title + '</h3><p>' + el._body + '</p>' + (el._act ? '<button class="btn primary act">' + ACTL[el._act] + ' &rarr;</button><div class="status" hidden></div>' : '');
+  if (el._act) pop.querySelector('.act').addEventListener('click', ev => { ev.stopPropagation(); runAct(el._act, pop); });
   pop.querySelector('.x').addEventListener('click', e => { e.stopPropagation(); closePop(); });
   pop.addEventListener('click', e => e.stopPropagation());
   spotsEl.appendChild(pop); popOpen = { el, pop }; positionPop(); audio.tick();
@@ -937,6 +950,7 @@ function openPop(k) {
 function closePop() { if (!popOpen) return; popOpen.el.classList.remove('on'); popOpen.pop.remove(); popOpen = null; }
 function positionPop() {
   if (!popOpen) return; const { el, pop } = popOpen, x = parseFloat(el.style.left), y = parseFloat(el.style.top), pw = pop.offsetWidth, ph = pop.offsetHeight;
+  if (W >= 760) { pop.style.left = 'auto'; pop.style.right = '56px'; pop.style.top = '84px'; return; } // a side panel keeps the island in view
   let left = x + 22, top = y - 50;
   if (left + pw > W - 12) left = x - 22 - pw;
   if (left < 12) left = Math.max(12, Math.min(W - pw - 12, x - pw / 2));
@@ -1059,6 +1073,77 @@ reflectSound();
 soundBtn.addEventListener('click', e => { e.stopPropagation(); wantSound = !wantSound; audio.set(wantSound); reflectSound(); try { localStorage.setItem('jd-sound', wantSound ? 'on' : 'off'); } catch (er) {} });
 document.addEventListener('visibilitychange', () => { if (document.hidden) audio.pause(); else if (wantSound) audio.resume(); });
 
+// ---- Platform engineering, made visible
+const FX = { acts: [], pulses: [], t: 0 };
+const glowMat = new THREE.MeshStandardMaterial({ color: '#2a2216', emissive: '#6be0b8', emissiveIntensity: 2.2 });
+const panelMat = (() => { // a tiny dashboard: bars and a line chart on a dark screen
+  const c = document.createElement('canvas'); c.width = 128; c.height = 80; const g = c.getContext('2d');
+  g.fillStyle = '#10161d'; g.fillRect(0, 0, 128, 80); g.fillStyle = '#1d2733'; for (let i = 0; i < 4; i++) g.fillRect(6 + i * 30, 8, 26, 26);
+  g.fillStyle = '#f2a03d'; [14, 22, 10, 18].forEach((v, i) => g.fillRect(10 + i * 30, 30 - v, 18, v));
+  g.strokeStyle = '#6be0b8'; g.lineWidth = 3; g.beginPath(); for (let x = 0; x <= 116; x += 6) g.lineTo(6 + x, 64 - 10 * Math.sin(x / 14) - x / 12); g.stroke();
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  return new THREE.MeshStandardMaterial({ map: t, emissive: '#ffffff', emissiveMap: t, emissiveIntensity: 1.1 });
+})();
+function grafanaTower(base) {
+  const g = new THREE.Group(), post = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.42, 0.05), new THREE.MeshStandardMaterial({ color: '#56616f', roughness: 0.6 }));
+  post.position.y = 0.21; const scr = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.22, 0.025), [glowMat, glowMat, glowMat, glowMat, panelMat, glowMat]); scr.position.y = 0.5;
+  g.add(post, scr); g.position.copy(base); g.scale.set(1, 0.001, 1); g.rotation.y = Math.atan2(camera.position.x - base.x, camera.position.z - base.z); scene.add(g); return g;
+}
+function status(pop, lines) { const s = pop && pop.querySelector('.status'); if (s) { s.hidden = false; s.textContent = lines; } }
+function runAct(kind, pop) {
+  const btn = pop.querySelector('.act'); if (btn) btn.disabled = true, btn.style.opacity = 0.5;
+  const t0 = performance.now(); audio.tick();
+  if (kind === 'grafana') {
+    const h = BOOZ[9], base = V(h.x + 0.3, h.y, h.z - 0.18);
+    const tw = FX.tower || (FX.tower = grafanaTower(base)); tw.scale.set(1, 0.001, 1);
+    FX.acts.push({ t0, dur: 4500, step(k) {
+      tw.scale.y = Math.max(0.001, Math.min(1, (k - 0.35) / 0.4)) * (1 + 0.08 * Math.sin(Math.min(1, Math.max(0, (k - 0.75) / 0.25)) * Math.PI));
+      status(pop, k < 0.15 ? 'custom resource applied' : k < 0.45 ? 'custom resource applied\noperator reconciling...' : k < 0.8 ? 'custom resource applied\noperator reconciling...\nGrafana deploying, wiring this team’s metrics and logs' : 'custom resource applied\noperator reconciling...\nGrafana ready: this team sees only its own data');
+    } });
+  }
+  if (kind === 'provision') {
+    const a = Math.PI * 2 * (8.5 / 9) + 0.35 + 0.33, r = 3.1, x = B.x + Math.cos(a) * r, z = B.z + Math.sin(a) * r * 0.85, y = ground(x, z);
+    const hs = FX.newHouse || (FX.newHouse = place('house_a', x, y, z, Math.PI - a, 0.001));
+    const beam = FX.beam || (FX.beam = new THREE.Mesh(new THREE.SphereGeometry(0.07, 12, 8), glowMat)); scene.add(beam);
+    const from = V(B.x, BY + 1.0, B.z), to = V(x, y + 0.3, z);
+    FX.acts.push({ t0, dur: 6500, step(k) {
+      const kb = Math.min(1, k / 0.3); beam.visible = k < 0.32; beam.position.copy(from).lerp(to, kb); beam.position.y += Math.sin(kb * Math.PI) * 0.9;
+      const kg = Math.max(0, Math.min(1, (k - 0.3) / 0.55)), sc = kg < 1 ? 0.001 + kg * 0.95 * (1 + 0.15 * Math.sin(kg * Math.PI)) : 0.95; hs.scale.setScalar(Math.max(0.001, sc));
+      status(pop, k < 0.3 ? 'cluster request received' : k < 0.55 ? 'cluster request received\nCrossplane composing resources (OpenTofu)' : k < 0.85 ? 'cluster request received\nCrossplane composing resources (OpenTofu)\nprovisioning EKS, bootstrapping GitOps' : 'cluster request received\nCrossplane composing resources (OpenTofu)\nprovisioning EKS, bootstrapping GitOps\nready: reconciled from Git');
+    } });
+  }
+  if (kind === 'migrate') {
+    const n = 27, im = FX.chunks || (FX.chunks = new THREE.InstancedMesh(new THREE.BoxGeometry(0.075, 0.075, 0.075), new THREE.MeshStandardMaterial({ color: '#c97a3a', roughness: 0.7 }), n));
+    im.castShadow = true; scene.add(im); const dm = new THREE.Object3D();
+    const A = V(MA.x - 0.45, ground(MA.x - 0.45, MA.z + 0.25), MA.z + 0.25), Bp = V(MB.x + 0.45, ground(MB.x + 0.45, MB.z + 0.25), MB.z + 0.25);
+    const slot = (P, i) => V(P.x + (i % 3 - 1) * 0.08, P.y + 0.04 + Math.floor(i / 9) * 0.08, P.z + (Math.floor(i / 3) % 3 - 1) * 0.08);
+    FX.acts.push({ t0, dur: 9000, step(k) {
+      let arrived = 0;
+      for (let i = 0; i < n; i++) {
+        const s = (k * 1.25 - i / n * 0.9) / 0.35, q = Math.max(0, Math.min(1, s)); if (q >= 1) arrived++;
+        let pp;
+        if (q <= 0) pp = slot(A, i);
+        else if (q >= 1) pp = slot(Bp, i);
+        else if (q < 0.15) pp = slot(A, i).lerp(cable.getPoint(0.04), q / 0.15);
+        else if (q > 0.85) pp = cable.getPoint(0.96).lerp(slot(Bp, i), (q - 0.85) / 0.15);
+        else { pp = cable.getPoint(0.04 + (q - 0.15) / 0.7 * 0.92); pp.y -= 0.17; }
+        dm.position.copy(pp); dm.rotation.set(0, cabRot, 0); dm.updateMatrix(); im.setMatrixAt(i, dm.matrix);
+      }
+      im.instanceMatrix.needsUpdate = true;
+      status(pop, arrived < n ? 'multipart upload through the transfer service\npart ' + Math.min(n, arrived + 1) + ' of ' + n + ' in flight, ' + arrived + ' reassembled' : 'all parts reassembled\nprojects, CI/CD config and images restored on the far side');
+    } });
+  }
+}
+function tickFX(now, t) {
+  FX.acts = FX.acts.filter(a => { const k = Math.min(1, (now - a.t0) / a.dur); a.step(k); return k < 1; });
+  GONDOLAS.forEach((g, i) => { const u = ((t * 0.035 + i / GONDOLAS.length) % 1), p = cable.getPoint(0.06 + u * 0.88); g.position.copy(p); });
+  // reconcile pulse: a ring of light that ripples out from the control plane while you are at Booz Allen
+  if (STOPS[cur].id === 'booz') {
+    if (!FX.ring) { FX.ring = new THREE.Mesh(new THREE.TorusGeometry(1, 0.02, 6, 96), new THREE.MeshBasicMaterial({ color: '#ffd27a', transparent: true, opacity: 0, depthWrite: false })); FX.ring.rotation.x = Math.PI / 2; FX.ring.position.set(B.x, BY + 0.06, B.z); scene.add(FX.ring); }
+    const k = (t % 5.5) / 2.6; FX.ring.visible = k < 1; FX.ring.scale.setScalar(1.5 + k * 2.4); FX.ring.material.opacity = 0.8 * (1 - k);
+  } else if (FX.ring) FX.ring.visible = false;
+}
+
 // ---- resize
 function resize() {
   W = innerWidth; H = innerHeight;
@@ -1066,6 +1151,7 @@ function resize() {
   camera.aspect = W / H; camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize);
+addEventListener('hashchange', () => { const k = STOPS.findIndex(s => s.id === location.hash.slice(1)); if (k >= 0 && k !== cur) go(k); });
 
 // ---- frame loop
 const ease = x => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -1101,7 +1187,7 @@ function frame(now) {
   if (asp < 1 && cur > 0) camera.setViewOffset(W, H * 1.3, 0, H * 0.3, W, H); else camera.clearViewOffset();
   camera.updateProjectionMatrix();
   if (frameN % 3 === 0 || trans) setDayLive(view.day);
-  animate(t); GRADE.uSeed.value = (t * 61.7) % 100;
+  animate(t); tickFX(now, t); GRADE.uSeed.value = (t * 61.7) % 100;
   skyDome.position.copy(camera.position);
   composer.render();
   // Raytheon: the seven releases launch one after another
@@ -1111,11 +1197,14 @@ function frame(now) {
     const rn = document.getElementById('relN'); if (rn) rn.textContent = lt < 0 ? '0' : done;
     if (lt > 7 * 0.8 + 1.6) launchT0 = null;
   }
+  const cardRect = cardEl.classList.contains('gone') ? null : cardEl.getBoundingClientRect();
   // markers follow the world
   const vis = trans ? 0 : 1;
   for (const el of spotsEl.children) {
     if (!el._p) continue;
-    const v = el._p.clone().project(camera), x = (v.x * 0.5 + 0.5) * W, y = (-v.y * 0.5 + 0.5) * H, inView = v.z < 1 && x > 8 && x < W - 8 && y > 60 && y < H - 60;
+    const v = el._p.clone().project(camera), x = (v.x * 0.5 + 0.5) * W, y = (-v.y * 0.5 + 0.5) * H;
+    const cr = cardRect, underCard = cr && x > cr.left - 10 && x < cr.right + 10 && y > cr.top - 10 && y < cr.bottom + 10;
+    const inView = v.z < 1 && x > 8 && x < W - 8 && y > 60 && y < H - 60 && !underCard;
     el.style.left = x + 'px'; el.style.top = y + 'px'; el.style.opacity = inView ? vis : 0; el.style.pointerEvents = inView && vis ? 'auto' : 'none';
   }
   positionPop();
