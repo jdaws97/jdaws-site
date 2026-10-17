@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resume · Jarod Daws</title>
+<meta name="description" content="Resume of Jarod Daws, DevOps and platform engineer. Cloud platforms and automation.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23132430%27/%3E%3Cpath d=%27M10 44c8-6 14-6 22 0s14 6 22 0%27 stroke=%27%2363d3c8%27 stroke-width=%275%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M20 38l8-18 6 10 4-6 8 14z%27 fill=%27%23e9dcc0%27/%3E%3C/svg%3E">
+<style>
+  @font-face{font-family:Inter;font-weight:400;font-display:swap;src:url(/fonts/inter-latin-400-normal.woff2)}
+  @font-face{font-family:Inter;font-weight:500;font-display:swap;src:url(/fonts/inter-latin-500-normal.woff2)}
+  @font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(/fonts/inter-latin-600-normal.woff2)}
+  @font-face{font-family:SourceSerif;font-weight:400;src:url(/fonts/source-serif-4-latin-400-normal.woff2)}
+  @font-face{font-family:SourceSerif;font-weight:600;src:url(/fonts/source-serif-4-latin-600-normal.woff2)}
+  :root{--ink:#132430;--soft:#4a5b67;--line:rgba(19,36,48,.14);--accent:#b0643f;--bg:#fbf8f2}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--ink:#e9eef2;--soft:#a6b4bf;--line:rgba(233,238,242,.16);--accent:#e3a06e;--bg:#0f1b24}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:400 16.5px/1.6 Inter,system-ui,sans-serif}
+  header{max-width:760px;margin:0 auto;padding:40px 20px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  header a{color:var(--ink);text-decoration:none;font-weight:500;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+  .name{max-width:760px;margin:0 auto;padding:48px 20px 8px}
+  .name h1{font:400 clamp(44px,8vw,64px)/1 SourceSerif;margin:0 0 12px;letter-spacing:-.015em}
+  .name p{margin:0;color:var(--soft);font-size:18px}
+  main{max-width:760px;margin:0 auto;padding:32px 20px 40px}
+  section{margin:0 0 48px}
+  h2{font:600 12px Inter;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .job{margin-bottom:30px}
+  .job h3{font:400 26px/1.2 SourceSerif;margin:0}
+  .job .role{margin:4px 0 10px;color:var(--soft);font-size:15px}
+  ul{margin:0;padding-left:20px} li{margin-bottom:6px}
+  .skills{display:grid;grid-template-columns:200px 1fr;gap:8px 20px;margin:0}
+  .skills dt{font-weight:600} .skills dd{margin:0;color:var(--soft)}
+  @media (max-width:600px){.skills{grid-template-columns:1fr}.skills dd{margin-bottom:8px}}
+  a{color:inherit}
+  footer{max-width:760px;margin:0 auto;padding:0 20px 56px;font-size:14px;color:var(--soft)}
+  @media print{header{display:none}body{background:#fff;color:#000;font-size:12pt}.name{padding-top:0}section{margin-bottom:20px}}
+</style></head><body>
+<header><a href="/">&larr; Back to the islands</a><a href="mailto:jarod.daws@protonmail.com">Email me</a></header>
+<div class="name"><h1>Jarod Daws</h1><p>DevOps and platform engineer &middot; Cloud platforms and automation</p></div>
+
+  <main>
+    <section class="summary">
+      <h2>Summary</h2>
+      <p>DevOps and platform engineer with 6+ years building Kubernetes fleet platforms on AWS for regulated and government environments. I design control planes that provision and manage clusters declaratively, write Go operators and platform tooling, and build AI tooling that keeps sensitive values out of infrastructure code.</p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="job">
+        <h3>Booz Allen Hamilton</h3>
+        <p class="role">Senior DevOps Engineer / Lead Engineer. Remote, Nov 2022 to present</p>
+        <ul>
+          <li>Architected a hub-and-spoke EKS management platform that provisions and operates customer workload clusters from a central control plane; now in customer beta.</li>
+          <li>Designed Crossplane compositions with OpenTofu, AWS, Kubernetes, and composition-function providers for declarative cluster provisioning and lifecycle management.</li>
+          <li>Operate a fleet of 8–10 Amazon EKS clusters with general, CI runner, and GPU node pools.</li>
+          <li>Built a Go Kubernetes operator that automates Prometheus and Grafana deployment into customer environments.</li>
+          <li>Built an AI agent skill that ensures OpenTofu and Terraform code uses data lookups for sensitive values and defines variables as it is built, rather than hard-coding them.</li>
+          <li>Standardized Terraform modules for repeatable hardened-platform deployments and automated CI runner infrastructure with Terraform and OpenTofu.</li>
+          <li>Built Python tooling for a multi-terabyte migration between secure environments, moving source projects, CI/CD configuration, and container images.</li>
+          <li>Developed Go CLIs, Python automation, and AWS Lambda functions for recurring platform operations, including credential-expiry alerting.</li>
+          <li>Lead technical delivery for the team and serve as the main point of contact for customer stakeholders.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <h3>Raytheon Technologies</h3>
+        <p class="role">Systems Engineer I. State College, PA, Mar 2020 to Nov 2022</p>
+        <ul>
+          <li>Maintained and improved a production DevOps pipeline, troubleshooting CI/CD failures and release-promotion issues.</li>
+          <li>Delivered seven product releases and built repeatable tooling for release preparation and promotion.</li>
+          <li>Expanded CI/CD support across Python, Puppet, and Terraform repositories.</li>
+          <li>Built developer tooling for local pipeline runs, promotion cleanup and retries, and automated release notes.</li>
+          <li>Implemented event-driven delivery automation with AWS SQS, S3 events, and Jenkins.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <dl class="skills">
+        <dt>Cloud and platforms</dt><dd>AWS, AWS GovCloud, Kubernetes (EKS primary; RKE2, k3s), OpenShift</dd>
+        <dt>Infrastructure and GitOps</dt><dd>Terraform, OpenTofu, Crossplane, FluxCD, ArgoCD, Kustomize, Helm, Ansible</dd>
+        <dt>CI/CD and tooling</dt><dd>GitLab, Jenkins, Harbor, SonarQube, Keycloak, Artifactory</dd>
+        <dt>Observability</dt><dd>Prometheus, Grafana, Loki, Mimir, Tempo</dd>
+        <dt>Languages</dt><dd>Go, Python, Bash</dd>
+        <dt>AI tooling</dt><dd>Claude Code, Codex, ChatGPT, agent skill authoring, prompt design</dd>
+      </dl>
+    </section>
+
+    <section class="edu">
+      <h2>Education and certification</h2>
+      <p><strong>Pennsylvania State University, Harrisburg.</strong> B.S. Electrical Engineering, 2019</p>
+      <p><strong>CompTIA Security+</strong>, 2024</p>
+    </section>
+
+    <section class="contact">
+      <h2>Contact</h2>
+      <p>Email <a href="mailto:jarod.daws@protonmail.com">jarod.daws@protonmail.com</a>. Open to remote roles and hybrid roles near York, PA.</p>
+    </section>
+  </main>
+  <footer>© 2026 Jarod Daws. Security clearance details available on request. </footer>
+</body></html>
